@@ -26,9 +26,9 @@
 	{/each}
 </div>
 
-<div class="flex-1 p-3" class:hidden={tabIndex !== 0}>
+<div class="flex-1 p-3 overflow-scroll" class:hidden={tabIndex !== 0}>
 	<!-- CheerpJ implicitly looks for a #console to write to -->
-	<pre class="font-mono text-sm" bind:this={console} id="console"></pre>
+	<pre class="font-mono text-sm h-0" bind:this={console} id="console"></pre>
 </div>
 <div class="flex-1 overflow-hidden" class:hidden={tabIndex !== 1} bind:clientWidth={width} bind:clientHeight={height}>
 	<div bind:this={display} class="absolute" style:width={`${width}px`} style:height={`${height}px`}></div>

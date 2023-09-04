@@ -3,43 +3,50 @@
 	import Menu from "./repl/Menu.svelte";
 	import Sidebar from "./repl/Sidebar.svelte";
 	import Output from "./repl/Output.svelte";
+	import Editor from "./repl/Editor.svelte";
+	import { files } from "./repl/state";
 	import { browser } from "$app/environment";
+	import FileTabs from "./repl/FileTabs.svelte";
 
 	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
 
-	let console: HTMLPreElement;
+	let consoleEl: HTMLPreElement;
 	let display: HTMLDivElement;
-
-	let value = `class JavaFiddle {
-	public static void main(String[] args) {
-		System.out.println("Hello, World!"); 
-	}
-}
-`;
+	let isReady = false;
 
 	async function ready() {
-		await compileAndRun(); // TODO: debounce
+		isReady = true;
+		files.set($files); // Force file write
 	}
 
-	$: if (value && browser) {
-		compileAndRun();
-	}
+	// Compile 400ms after last change
+	let timer: number | undefined;
+	files.subscribe(() => {
+		clearTimeout(timer);
+		if (isReady) timer = setTimeout(compileAndRun, 100);
+	});
 
-	let currentId = 0;
 	async function compileAndRun() {
-		console.innerHTML = "";
+		if (!browser || !isReady) return;
 
+		console.info("compileAndRun");
+
+		consoleEl.innerHTML = "";
+
+		/*
 		const packageName = "javafiddle" + (currentId++).toString();
 
 		const newCode = "package " + packageName + ";\n" + value;
 		cheerpjAddStringFile("/str/JavaFiddle.java", newCode);
+		*/
 
-		const code = await cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", "/str/JavaFiddle.java","-d","/files/");
+		const sourceFiles = $files.map(file => "/str/" + file.path);
+		const code = await cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", ...sourceFiles, "-d", "/files/", "-Xlint");
 		if (code != 0) {
 			throw new Error("Compilation failed");
 		}
 
-		cheerpjRunMain(packageName+".JavaFiddle", "/app/tools.jar:/files/");
+		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
 	}
 </script>
 
@@ -50,14 +57,13 @@
 		<div class="flex-1">
 			<div class="h-1/2 flex flex-col">
 				<div class="border-b border-stone-200 text-sm">
-					<span class="inline-block px-3 py-2 text-stone-600 cursor-pointer">JavaFiddle.java</span>
+					<FileTabs />
 				</div>
 
-				<!-- TODO: codemirror -->
-				<textarea class="font-mono w-full p-3 resize-none flex-1 outline-none" bind:value></textarea>
+				<Editor />
 			</div>
 			<div class="h-1/2 flex flex-col overflow-hidden">
-				<Output bind:console={console} bind:display={display} />
+				<Output bind:console={consoleEl} bind:display={display} />
 			</div>
 		</div>
 	</div>
