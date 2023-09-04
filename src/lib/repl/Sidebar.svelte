@@ -1,6 +1,19 @@
-<aside class="w-80 bg-stone-100 flex-shrink-0">
+<script lang="ts">
+	let open = true; // TODO: persist to localStorage
+</script>
 
-	<div class="p-4 leading-tight text-stone-700">
+<aside class="w-10 bg-stone-100 flex-shrink-0 transition-[width]" class:!w-80={open}>
+	<div class="p-2 text-right">
+		<button class="w-6 h-6 hover:bg-stone-200 text-stone-500" on:click={() => open = !open}>
+			{#if open}
+				X
+			{:else}
+				&lt;
+			{/if}
+		</button>
+	</div>
+
+	<div class="w-80 p-4 leading-tight text-stone-700">
 		<p>
 			JavaFiddle is an online tool to test and share snippets of Java code.
 		</p>
