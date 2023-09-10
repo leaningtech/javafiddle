@@ -7,6 +7,7 @@
 	import { files } from "./repl/state";
 	import { browser } from "$app/environment";
 	import FileTabs from "./repl/FileTabs.svelte";
+	import { goto } from "$app/navigation";
 
 	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
 
@@ -48,10 +49,34 @@
 
 		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
 	}
+
+	async function save() {
+		const body = {
+			files: $files,
+		};
+		const response = await fetch("", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(body),
+		});
+		if (!response.ok) {
+			console.error("save failed", response.status, await response.text());
+			return;
+		}
+
+		// navigate if needed
+		const { fiddleId } = await response.json();
+		const url = "/" + fiddleId;
+		if (window.location.pathname != url) {
+			goto(url, { replaceState: true });
+		}
+	}
 </script>
 
 <div class="w-full h-full min-h-screen bg-white text-black font-sans flex flex-col">
-	<Menu />
+	<Menu on:save={save} />
 	<div class="flex items-stretch flex-1">
 		<Sidebar />
 		<div class="flex-1 overflow-hidden">

@@ -31,12 +31,12 @@
 			if (state) {
 				// Update state to match filesystem
 				const existing = state.doc.toString();
-				if (file.contents !== existing) {
+				if (file.content !== existing) {
 					const transaction = state.update({
 						changes: {
 							from: 0,
 							to: existing.length,
-							insert: file.contents,
+							insert: file.content,
 						}
 					});
 					state = transaction.state;
@@ -44,7 +44,7 @@
 			} else {
 				const extension = file.path.split(".").pop();
 				state = EditorState.create({
-					doc: file.contents,
+					doc: file.content,
 					extensions: extension === "java" ? [...extensions, java()] : extensions,
 				});
 			}
@@ -70,7 +70,7 @@
 						if (file.path === $selectedFilePath) {
 							return {
 								...file,
-								contents: transaction.state.doc.toString(),
+								content: transaction.state.doc.toString(),
 							}
 						} else {
 							return file;

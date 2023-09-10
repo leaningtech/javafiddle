@@ -8,6 +8,13 @@
       "when": 1694346617649,
       "tag": "0000_classy_stellaris",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1694356274145,
+      "tag": "0001_skinny_mandrill",
+      "breakpoints": true
     }
   ]
 }

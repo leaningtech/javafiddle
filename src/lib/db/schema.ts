@@ -8,16 +8,16 @@ export const users = pgTable("users", {
 
 export const fiddles = pgTable("fiddles", {
 	id: serial("id").primaryKey(),
-	userId: integer('user_id').references(() => users.id),
+	userId: integer('user_id').references(() => users.id).notNull(),
 	created: timestamp("created").notNull().defaultNow(),
 	updated: timestamp("updated").notNull().defaultNow(),
-	title: integer("title").notNull(),
+	title: text("title").notNull(),
 	description: text("description").notNull(),
 });
 
-export const fiddleFile = pgTable("fiddle_files", {
+export const fiddleFiles = pgTable("fiddle_files", {
 	id: serial("id").primaryKey(),
-	fiddleId: integer('fiddle_id').references(() => fiddles.id),
+	fiddleId: integer('fiddle_id').references(() => fiddles.id).notNull(),
 	path: text("path").notNull(),
 	content: text("content").notNull(),
 });
