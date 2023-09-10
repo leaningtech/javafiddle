@@ -106,5 +106,5 @@
 
 <div
 	bind:this={container}
-	class="grow"
+	class="grow overflow-hidden"
 />

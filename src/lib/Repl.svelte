@@ -54,7 +54,7 @@
 	<Menu />
 	<div class="flex items-stretch flex-1">
 		<Sidebar />
-		<div class="flex-1">
+		<div class="flex-1 overflow-hidden">
 			<div class="h-1/2 flex flex-col">
 				<div class="border-b border-stone-200 text-sm">
 					<FileTabs />
