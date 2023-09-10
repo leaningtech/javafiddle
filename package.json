@@ -37,6 +37,7 @@
 		"codemirror": "^6.0.1",
 		"drizzle-orm": "^0.28.6",
 		"postgres": "^3.3.5",
+		"svelte-kit-cookie-session": "^4.0.0",
 		"zod": "^3.22.2"
 	}
 }

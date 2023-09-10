@@ -5,13 +5,14 @@ import type { PageServerLoad } from './$types';
 import { PUBLIC_GITHUB_CLIENT_ID } from '$env/static/public';
 import { GITHUB_CLIENT_SECRET } from '$env/static/private';
 import z from "zod";
+import { getOrCreateUserByGithubId } from "$lib/db/auth.server"
 
 const githubUser = z.object({
 	id: z.number(),
 });
 
 // get `code` from query string and validate it with github
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, locals }) => {
 	const code = url.searchParams.get('code');
 	if (!code) {
 		throw redirect(303, "/");
@@ -42,8 +43,9 @@ export const load: PageServerLoad = async ({ url }) => {
 	});
 	const user = githubUser.parse(await userReq.json());
 
-	// TODO: update session (i.e. login)
-	console.log("login", user);
+	const dbUser = await getOrCreateUserByGithubId(user.id);
+	locals.session.set({ userId: dbUser.id });
 
-	throw redirect(307, "/");
+	// Can't redirect because we need to set cookie, so +page.svelte will do the redirect client-side
+	return {};
 };

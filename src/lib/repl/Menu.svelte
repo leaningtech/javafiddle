@@ -1,7 +1,5 @@
 <script type="ts">
-	import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
-
-	const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${PUBLIC_GITHUB_CLIENT_ID}`;
+	import SessionButton from "./menu/SessionButton.svelte";
 </script>
 
 <header class="px-4 flex items-center justify-between gap-4 bg-white text-black relative shadow">
@@ -17,7 +15,7 @@
 
 	<ul class="flex-1 text-right">
 		<li>
-			<a href={githubLoginUrl}>Sign in</a>
+			<SessionButton />
 		</li>
 	</ul>
 </header>

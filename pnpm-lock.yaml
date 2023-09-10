@@ -29,6 +29,9 @@ dependencies:
   postgres:
     specifier: ^3.3.5
     version: 3.3.5
+  svelte-kit-cookie-session:
+    specifier: ^4.0.0
+    version: 4.0.0
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -425,6 +428,10 @@ packages:
     resolution: {integrity: sha512-BZfVvf7Re5BIwJHlZXbJn9L8lus5EonxQghyn+ih8Wl36XMFBPTXC0KM0IdUtj9w/diPHsKlXVgL+AlX2jYJ0Q==}
     dependencies:
       '@lezer/common': 1.0.4
+    dev: false
+
+  /@noble/ciphers@0.2.0:
+    resolution: {integrity: sha512-6YBxJDAapHSdd3bLDv6x2wRPwq4QFMUaB3HvljNBUTThDd12eSm7/3F+2lnfzx2jvM+S6Nsy0jEt9QbPqSwqRw==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -1712,6 +1719,12 @@ packages:
     dependencies:
       svelte: 4.2.0
     dev: true
+
+  /svelte-kit-cookie-session@4.0.0:
+    resolution: {integrity: sha512-P7Og9z+cpwitS8JN9bBMxIFvX7kBM/Vrx4gDYbodO7qtT5C+EMJnNFpruvQgomL2UthzHYWLN/4aEgAGDgPTDA==}
+    dependencies:
+      '@noble/ciphers': 0.2.0
+    dev: false
 
   /svelte-preprocess@5.0.4(postcss@8.4.29)(svelte@4.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
