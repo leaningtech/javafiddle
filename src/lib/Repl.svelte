@@ -1,53 +1,43 @@
 <script lang="ts">
-	import CheerpJ from "./CheerpJ.svelte";
 	import Menu from "./repl/Menu.svelte";
 	import Sidebar from "./repl/Sidebar.svelte";
-	import Output from "./repl/Output.svelte";
 	import Editor from "./repl/Editor.svelte";
 	import { files } from "./repl/state";
-	import { browser } from "$app/environment";
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
 
 	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
 
-	let consoleEl: HTMLPreElement;
-	let display: HTMLDivElement;
-	let isReady = false;
+	export let outputUrl: string;
+	
+	let iframe: HTMLIFrameElement;
+	let loading = false;
 
-	async function ready() {
-		isReady = true;
-		files.set($files); // Force file write
-	}
-
-	// Compile 400ms after last change
-	let timer: number | undefined;
 	files.subscribe(() => {
-		clearTimeout(timer);
-		if (isReady) timer = setTimeout(compileAndRun, 100);
+		if (!loading) {
+			iframe?.contentWindow?.postMessage({
+				action: "reload",
+			}, window.location.origin);
+			loading = true;
+		}
 	});
 
-	async function compileAndRun() {
-		if (!browser || !isReady) return;
+	function onMessage(event: MessageEvent) {
+		if (event.origin !== window.location.origin) return;
 
-		console.info("compileAndRun");
+		const { action } = event.data;
+		console.log("recv from iframe", event.data);
 
-		consoleEl.innerHTML = "";
-
-		/*
-		const packageName = "javafiddle" + (currentId++).toString();
-
-		const newCode = "package " + packageName + ";\n" + value;
-		cheerpjAddStringFile("/str/JavaFiddle.java", newCode);
-		*/
-
-		const sourceFiles = $files.map(file => "/str/" + file.path);
-		const code = await cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", ...sourceFiles, "-d", "/files/", "-Xlint");
-		if (code != 0) {
-			throw new Error("Compilation failed");
+		if (action === "ready") {
+			iframe?.contentWindow?.postMessage({
+				action: "run",
+				files: $files,
+			}, window.location.origin);
+			loading = false; // once files are sent, any changes to files will trigger a reload
+		} else if (action === "running") {
+		} else if (action === "compile_error") {
+			console.error("compile error", event.data.console);
 		}
-
-		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
 	}
 
 	async function save() {
@@ -75,6 +65,8 @@
 	}
 </script>
 
+<svelte:window on:message={onMessage} />
+
 <div class="w-full h-full min-h-screen bg-white text-black font-sans flex flex-col">
 	<Menu on:save={save} />
 	<div class="flex items-stretch flex-1">
@@ -87,12 +79,9 @@
 
 				<Editor />
 			</div>
-			<div class="h-1/2 flex flex-col overflow-hidden">
-				<Output bind:console={consoleEl} bind:display={display} />
+			<div class="h-1/2 border-t border-stone-200">
+				<iframe bind:this={iframe} src={outputUrl} class="w-full h-full" class:hidden={loading} title="Output" allowtransparency={true} frameborder={0} />
 			</div>
 		</div>
 	</div>
 </div>
-
-<!-- TODO: iframe -->
-<CheerpJ on:ready={ready} {display} />
