@@ -3,9 +3,12 @@
 	import CheerpJ from "$lib/CheerpJ.svelte";
 	import Output from "$lib/repl/Output.svelte";
 	import { files } from "$lib/repl/state";
+	import Loading from "$lib/Loading.svelte";
 
 	const isTop = typeof window === "object" && window.top === window;
 	const isSaved = true; // TODO
+
+	let loading = true;
 
 	async function ready() {
 		if (window.top !== window && window.top) {
@@ -45,19 +48,24 @@
 		const sourceFiles = $files.map(file => "/str/" + file.path);
 		const code = await cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", ...sourceFiles, "-d", "/files/", "-Xlint");
 		if (code != 0) {
+			loading = false;
 			window.top?.postMessage({ action: "compile_error", console: consoleEl.innerText }, window.location.origin);
 			throw new Error("Compilation failed");
 		}
 
 		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
-
+		loading = false;
 		window.top?.postMessage({ action: "running" }, window.location.origin);
 	}
 </script>
 
 <svelte:window on:message={onMessage} />
 
-<div class="flex flex-col w-screen h-screen overflow-hidden">
+<div class="w-screen h-screen" class:hidden={!loading}>
+	<Loading />
+</div>
+
+<div class="flex flex-col w-screen h-screen overflow-hidden" class:hidden={loading}>
 	<Output bind:console={consoleEl} bind:display={display} showLink={!isTop && isSaved} />
 </div>
 

@@ -5,6 +5,7 @@
 	import { files } from "./repl/state";
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
+	import Loading from "./Loading.svelte";
 
 	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
 
@@ -15,10 +16,10 @@
 
 	files.subscribe(() => {
 		if (!loading) {
+			loading = true;
 			iframe?.contentWindow?.postMessage({
 				action: "reload",
 			}, window.location.origin);
-			loading = true;
 		}
 	});
 
@@ -79,7 +80,10 @@
 
 				<Editor />
 			</div>
-			<div class="h-1/2 border-t border-stone-200">
+			<div class="h-1/2 border-t border-stone-200 overflow-hidden">
+				<div class="w-full h-full" class:hidden={!loading}>
+					<Loading />
+				</div>
 				<iframe bind:this={iframe} src={outputUrl} class="w-full h-full" class:hidden={loading} title="Output" allowtransparency={true} frameborder={0} />
 			</div>
 		</div>
