@@ -9,7 +9,9 @@ export async function load({ params }) {
 			files: [
 				{
 					path: "Main.java",
-					content: `class Main {
+					content: `package fiddle;
+
+class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!"); 
     }
