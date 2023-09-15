@@ -5,3 +5,8 @@
 .cm-editor {
 	height: 100%;
 }
+
+.cm-editor .cm-content {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* font-mono */
+	font-size: 13px;
+}
