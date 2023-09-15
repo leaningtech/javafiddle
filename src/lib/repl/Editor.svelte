@@ -18,15 +18,17 @@
 	let editorView: EditorView | undefined;
 	const themeCompartment = new Compartment;
 
+	$: theme = $effectiveTheme === "dark" ? coolGlow : tomorrow;
+
 	$: reset($files);
 
-	const extensions = [
+	const extensions = () => [
 		basicSetup,
 		keymap.of([/*{ key: 'Tab', run: acceptCompletion },*/ indentWithTab]),
 		indentUnit.of('    '),
 		lintGutter(),
 		compartment.of(diagnostic.of([])),
-		themeCompartment.of([]),
+		themeCompartment.of(theme),
 	];
 
 	// Resets states to files
@@ -53,7 +55,7 @@
 				const extension = file.path.split(".").pop();
 				state = EditorState.create({
 					doc: file.content,
-					extensions: extension === "java" ? [...extensions, java()] : extensions,
+					extensions: extension === "java" ? [...extensions(), java()] : extensions(),
 				});
 			}
 
@@ -134,7 +136,6 @@
 	}
 
 	$: {
-		const theme = $effectiveTheme === "dark" ? coolGlow : tomorrow;
 		const tr = {
 			effects: themeCompartment.reconfigure(theme),
 		};
