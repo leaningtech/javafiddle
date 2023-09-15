@@ -14,12 +14,11 @@
 	
 	let iframe: HTMLIFrameElement;
 	let loading = false;
-	let compileErrorConsole = "";
+	let compileLog = "";
 
 	files.subscribe(() => {
 		if (!loading) {
 			loading = true;
-			compileErrorConsole = "";
 			iframe?.contentWindow?.postMessage({
 				action: "reload",
 			}, window.location.origin);
@@ -39,8 +38,9 @@
 			}, window.location.origin);
 			loading = false; // once files are sent, any changes to files will trigger a reload
 		} else if (action === "running") {
+			compileLog = event.data.compileLog;
 		} else if (action === "compile_error") {
-			compileErrorConsole = event.data.console;
+			compileLog = event.data.compileLog;
 		}
 	}
 
@@ -81,7 +81,7 @@
 					<FileTabs />
 				</div>
 
-				<Editor {compileErrorConsole} />
+				<Editor {compileLog} />
 			</div>
 			<div class="h-1/2 border-t border-stone-200 overflow-hidden">
 				<div class="w-full h-full" class:hidden={!loading}>

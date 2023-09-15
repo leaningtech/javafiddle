@@ -47,15 +47,17 @@
 
 		const sourceFiles = $files.map(file => "/str/" + file.path);
 		const code = await cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", ...sourceFiles, "-d", "/files/", "-Xlint");
+		const compileLog = consoleEl.innerText;
 		if (code != 0) {
 			loading = false;
-			window.top?.postMessage({ action: "compile_error", console: consoleEl.innerText }, window.location.origin);
+			window.top?.postMessage({ action: "compile_error", compileLog }, window.location.origin);
 			throw new Error("Compilation failed");
 		}
 
+		consoleEl.innerHTML = "";
 		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
 		loading = false;
-		window.top?.postMessage({ action: "running" }, window.location.origin);
+		window.top?.postMessage({ action: "running", compileLog }, window.location.origin);
 	}
 </script>
 

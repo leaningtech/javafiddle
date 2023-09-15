@@ -14,7 +14,7 @@ export const diagnostic = Facet.define<Diagnostic[]>({
 
 export const compartment = new Compartment;
 
-export function parseCompileErrorConsole(log: string, files: File[]): Diagnostic[][] {
+export function parseCompileLog(log: string, files: File[]): Diagnostic[][] {
 	const logLines = log.split("\n");
 	const diagnostics: Diagnostic[][] = [];
 	const re = /^\/str\/([^:]+):(\d+): ([^:]+): ([^:]+)$/;

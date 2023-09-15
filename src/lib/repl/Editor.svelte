@@ -9,7 +9,7 @@
 	import { java } from '@codemirror/lang-java';
 	import { files, selectedFilePath, type File } from "./state";
 	import "./codemirror.css";
-	import { compartment, diagnostic, parseCompileErrorConsole } from "./linter";
+	import { compartment, diagnostic, parseCompileLog } from "./linter";
 
 	let container: HTMLDivElement;
 	let editorStates: Map<string, EditorState> = new Map();
@@ -108,9 +108,9 @@
 	}
 
 	// Linter
-	export let compileErrorConsole: string;
+	export let compileLog: string;
 	$: {
-		const diagnostics = parseCompileErrorConsole(compileErrorConsole, $files);
+		const diagnostics = parseCompileLog(compileLog, $files);
 		for (let fileIndex = 0; fileIndex < diagnostics.length; fileIndex++) {
 			const diagnosticsForFile = diagnostics[fileIndex];
 			const path = $files[fileIndex].path;
