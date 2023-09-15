@@ -1,39 +1,69 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 	import { isSidebarOpen } from "./state";
-	import { fade } from 'svelte/transition';
+	import { blur } from 'svelte/transition';
+	import { effectiveTheme } from "$lib/settings/store";
+
+	import cheerpjDark from '$lib/assets/cheerpj/logotype-white.svg';
+	import cheerpjLight from '$lib/assets/cheerpj/logotype-grey.svg';
+	$: cheerpjLogotypeUrl = $effectiveTheme === "dark" ? cheerpjDark : cheerpjLight;
 </script>
 
-<aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width]" class:!w-80={$isSidebarOpen}>
+<aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width] flex flex-col" class:!w-80={$isSidebarOpen}>
 	<div class="p-2 text-right">
 		<button class="w-6 h-6 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-500 rounded inline-flex items-center justify-center" on:click={() => $isSidebarOpen = !$isSidebarOpen}>
 			{#if $isSidebarOpen}
 				<Icon icon="mi:close" />
 			{:else}
-				<Icon icon="mi:chevron-right" />
+				<Icon icon="mi:menu" />
 			{/if}
 		</button>
 	</div>
 
-	{#if $isSidebarOpen}
-		<div class="w-80 p-4 leading-tight text-gray-700 dark:text-gray-400 text-sm" transition:fade={{ duration: 150 }}>
-			<p>
-				JavaFiddle is an online tool to test and share snippets of Java code.
-			</p>
-
-			<hr class="my-4 dark:border-gray-700" />
-
-			<ul class="list-disc space-y-2 ml-4">
-				<li>
-					Runs entirely <b>in your browser</b>.
-				</li>
-				<li>
-					Works <b>offline</b>.
-				</li>
-				<li>
-					Supports Swing, audio, printing - any Java SE component.
-				</li>
-			</ul>
+	<div class="w-80 grow">
+		<div class="h-1/2">
+			<!-- TODO: menu -->
 		</div>
-	{/if}
+		{#if $isSidebarOpen}
+			<div class="h-1/2 flex flex-col" transition:blur={{ duration: 150 }}>
+				<div class="grow p-4 leading-tight bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-sm">
+					<p>
+						JavaFiddle is an online tool to <b>build</b> and <b>share</b> snippets of Java code.
+					</p>
+
+					<hr class="my-6 border-gray-300 dark:border-gray-600" />
+
+					<ul class="list-disc space-y-2 ml-3">
+						<li>
+							Runs entirely <b>in your browser</b>.
+						</li>
+						<li>
+							Works <b>offline</b>.
+						</li>
+						<li>
+							Supports all of Java SE 8, including Swing.
+						</li>
+					</ul>
+
+					<div class="mt-6 flex items-center justify-center gap-2">
+						<a class="rounded bg-[#5865F2] text-white font-semibold px-3 py-2 inline-flex items-center justify-center gap-2" href="https://discord.gg/qBMHpK9Kqve">
+							<Icon icon="fa-brands:discord" class="w-4 h-4" />
+							Discord server
+						</a>
+
+						<a class="rounded hover:bg-gray-800 text-gray-950 dark:text-white hover:text-white font-semibold px-3 py-2 inline-flex items-center justify-center gap-2" href="https://github.com/leaningtech/javafiddle">
+							<Icon icon="fa-brands:github" class="w-4 h-4" />
+							View source
+						</a>
+					</div>
+				</div>
+				<a class="p-6 border-l-8 border-orange-500 bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300" href="https://labs.leaningtech.com/cheerpj">
+					<img src={cheerpjLogotypeUrl} alt="CheerpJ" class="h-12 mb-4" />
+					<p class="text-sm leading-tight">
+						Run Java applications in the browser with CheerpJ. Supports applets, JNLP, Web Start, Oracle Forms, and more.
+					</p>
+				</a>
+			</div>
+		{/if}
+	</div>
 </aside>
