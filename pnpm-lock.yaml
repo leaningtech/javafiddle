@@ -44,6 +44,9 @@ dependencies:
   svelte-kit-cookie-session:
     specifier: ^4.0.0
     version: 4.0.0
+  svelte-relative-time:
+    specifier: ^0.0.4
+    version: 0.0.4(svelte@4.2.0)
   thememirror:
     specifier: ^2.0.1
     version: 2.0.1(@codemirror/language@6.9.0)(@codemirror/state@6.2.1)(@codemirror/view@6.17.1)
@@ -1829,6 +1832,14 @@ packages:
       svelte: 4.2.0
       typescript: 5.2.2
     dev: true
+
+  /svelte-relative-time@0.0.4(svelte@4.2.0):
+    resolution: {integrity: sha512-R6z6E0BqgqbSdhB40rRaqN9oAWLtiAK7b3G/7BxAQztn8q8+oa1mpDljvtSAW4xb471HA4tn8R+9/v/JhpeFtA==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0
+    dependencies:
+      svelte: 4.2.0
+    dev: false
 
   /svelte@4.2.0:
     resolution: {integrity: sha512-kVsdPjDbLrv74SmLSUzAsBGquMs4MPgWGkGLpH+PjOYnFOziAvENVzgJmyOCV2gntxE32aNm8/sqNKD6LbIpeQ==}

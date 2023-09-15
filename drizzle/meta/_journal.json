@@ -15,6 +15,13 @@
       "when": 1694356274145,
       "tag": "0001_skinny_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1694789136645,
+      "tag": "0002_handy_johnny_blaze",
+      "breakpoints": true
     }
   ]
 }

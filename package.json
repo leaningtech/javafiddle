@@ -42,6 +42,7 @@
 		"drizzle-orm": "^0.28.6",
 		"postgres": "^3.3.5",
 		"svelte-kit-cookie-session": "^4.0.0",
+		"svelte-relative-time": "^0.0.4",
 		"thememirror": "^2.0.1",
 		"zod": "^3.22.2"
 	}

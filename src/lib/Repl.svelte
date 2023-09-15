@@ -9,13 +9,18 @@
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { theme } from "./settings/store";
 
+	export let updated: Date | undefined;
 	export let outputUrl: string;
-	
+	let isSaving = false;
+	let isSaved = false;
+
 	let iframe: HTMLIFrameElement;
 	let loading = false;
 	let compileLog = "";
 
 	files.subscribe(() => {
+		isSaved = false;
+
 		if (!loading) {
 			loading = true;
 			iframe?.contentWindow?.postMessage({
@@ -44,6 +49,8 @@
 	}
 
 	async function save() {
+		isSaving = true;
+
 		const body = {
 			files: $files,
 		};
@@ -54,10 +61,14 @@
 			},
 			body: JSON.stringify(body),
 		});
+		isSaving = false;
 		if (!response.ok) {
 			console.error("save failed", response.status, await response.text());
 			return;
 		}
+
+		updated = new Date();
+		isSaved = true;
 
 		// navigate if needed
 		const { fiddleId } = await response.json();
@@ -79,7 +90,7 @@
 <svelte:window on:message={onMessage} />
 
 <div class="w-full h-full min-h-screen font-sans flex flex-col">
-	<Menu on:save={save} />
+	<Menu {updated} {isSaving} {isSaved} on:save={save} />
 	<div class="flex items-stretch flex-1">
 		<Sidebar />
 		<div class="flex-1 overflow-hidden">

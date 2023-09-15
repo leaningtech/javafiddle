@@ -9,8 +9,8 @@ export const users = pgTable("users", {
 export const fiddles = pgTable("fiddles", {
 	id: serial("id").primaryKey(),
 	userId: integer('user_id').references(() => users.id).notNull(),
-	created: timestamp("created").notNull().defaultNow(),
-	updated: timestamp("updated").notNull().defaultNow(),
+	created: timestamp("created", { withTimezone: true }).notNull().defaultNow(),
+	updated: timestamp("updated", { withTimezone: true }).notNull().defaultNow(),
 	title: text("title").notNull(),
 	description: text("description").notNull(),
 });
