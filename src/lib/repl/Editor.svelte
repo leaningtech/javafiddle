@@ -110,13 +110,22 @@
 	// Linter
 	export let compileErrorConsole: string;
 	$: {
-		console.log("linting");
-		const selectedFile = $files.find(f => f.path === $selectedFilePath);
-		if (editorView && selectedFile) {
-			const diagnostics = parseCompileErrorConsole(compileErrorConsole, selectedFile);
-			editorView.dispatch({
-				effects: compartment.reconfigure(diagnostic.of(diagnostics)),
-			});
+		const diagnostics = parseCompileErrorConsole(compileErrorConsole, $files);
+		for (let fileIndex = 0; fileIndex < diagnostics.length; fileIndex++) {
+			const diagnosticsForFile = diagnostics[fileIndex];
+			const path = $files[fileIndex].path;
+			const tr = {
+				effects: compartment.reconfigure(diagnostic.of(diagnosticsForFile)),
+			};
+			if ($selectedFilePath === path) {
+				editorView?.dispatch(tr);
+			} else {
+				// If we're not viewing the state, update it in place.
+				// This is so that we don't have to re-lint the file when we switch to it.
+				const state = editorStates.get(path);
+				if (!state) continue;
+				editorStates.set(path, state.update(tr).state);
+			}
 		}
 	}
 </script>
