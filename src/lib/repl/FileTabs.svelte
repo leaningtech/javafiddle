@@ -19,6 +19,7 @@
 		<FileTab {file} />
 	{/each}
 	<button
+		class="mx-1 mb-1"
 		title="New file"
 		on:click={() => {
 			const path = getNewFilePath();
