@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { persist, createLocalStorage } from "@macfja/svelte-persistent-store";
 
 export type File = {
 	id?: number,
@@ -23,3 +24,5 @@ files.subscribe($files => {
 });
 
 export const selectedFilePath = writable<string>("Main.java");
+
+export const isSidebarOpen = persist(writable(true), createLocalStorage(), "isSidebarOpen");
