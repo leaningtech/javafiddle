@@ -5,9 +5,11 @@
 	import { EditorState } from '@codemirror/state';
 	import { indentWithTab } from '@codemirror/commands';
 	import { indentUnit } from '@codemirror/language';
+	import { lintGutter } from "@codemirror/lint";
 	import { java } from '@codemirror/lang-java';
 	import { files, selectedFilePath, type File } from "./state";
 	import "./codemirror.css";
+	import { compartment, diagnostic, parseCompileErrorConsole } from "./linter";
 
 	let container: HTMLDivElement;
 	let editorStates: Map<string, EditorState> = new Map();
@@ -19,6 +21,8 @@
 		basicSetup,
 		keymap.of([/*{ key: 'Tab', run: acceptCompletion },*/ indentWithTab]),
 		indentUnit.of('    '),
+		lintGutter(),
+		compartment.of(diagnostic.of([])),
 	];
 
 	// Resets states to files
@@ -100,6 +104,19 @@
 		const state = editorStates.get($selectedFilePath);
 		if (state) {
 			editorView?.setState(state);
+		}
+	}
+
+	// Linter
+	export let compileErrorConsole: string;
+	$: {
+		console.log("linting");
+		const selectedFile = $files.find(f => f.path === $selectedFilePath);
+		if (editorView && selectedFile) {
+			const diagnostics = parseCompileErrorConsole(compileErrorConsole, selectedFile);
+			editorView.dispatch({
+				effects: compartment.reconfigure(diagnostic.of(diagnostics)),
+			});
 		}
 	}
 </script>

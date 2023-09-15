@@ -6,6 +6,7 @@
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
+	import { compile } from "svelte/compiler";
 
 	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
 
@@ -13,10 +14,12 @@
 	
 	let iframe: HTMLIFrameElement;
 	let loading = false;
+	let compileErrorConsole = "";
 
 	files.subscribe(() => {
 		if (!loading) {
 			loading = true;
+			compileErrorConsole = "";
 			iframe?.contentWindow?.postMessage({
 				action: "reload",
 			}, window.location.origin);
@@ -37,7 +40,7 @@
 			loading = false; // once files are sent, any changes to files will trigger a reload
 		} else if (action === "running") {
 		} else if (action === "compile_error") {
-			console.error("compile error", event.data.console);
+			compileErrorConsole = event.data.console;
 		}
 	}
 
@@ -78,7 +81,7 @@
 					<FileTabs />
 				</div>
 
-				<Editor />
+				<Editor {compileErrorConsole} />
 			</div>
 			<div class="h-1/2 border-t border-stone-200 overflow-hidden">
 				<div class="w-full h-full" class:hidden={!loading}>
