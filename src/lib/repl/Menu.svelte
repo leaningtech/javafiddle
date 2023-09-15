@@ -7,10 +7,12 @@
 	const dispatch = createEventDispatcher<{ save: undefined, run: undefined }>();
 </script>
 
-<header class="px-4 flex items-center justify-between gap-4 relative shadow">
-	<h1>JavaFiddle</h1>
+<header class="px-4 flex items-center justify-between gap-4 relative shadow dark:shadow-none">
+	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
+		<h1>JavaFiddle</h1>
+	</a>
 
-	<ul class="my-4 text-sm flex gap-2 items-center">
+	<ul class="my-3 text-sm flex gap-2 items-center">
 		<li>
 			<button on:click={() => dispatch("run", undefined)} class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1">
 				<Icon icon="mi:play" class="w-5 h-5 mr-1" />
