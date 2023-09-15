@@ -26,6 +26,9 @@ dependencies:
   '@iconify/svelte':
     specifier: ^3.1.4
     version: 3.1.4(svelte@4.2.0)
+  '@macfja/svelte-persistent-store':
+    specifier: ^2.4.0
+    version: 2.4.0(svelte@4.2.0)
   '@rich_harris/svelte-split-pane':
     specifier: ^1.1.1
     version: 1.1.1(svelte@4.2.0)
@@ -41,6 +44,9 @@ dependencies:
   svelte-kit-cookie-session:
     specifier: ^4.0.0
     version: 4.0.0
+  thememirror:
+    specifier: ^2.0.1
+    version: 2.0.1(@codemirror/language@6.9.0)(@codemirror/state@6.2.1)(@codemirror/view@6.17.1)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -446,6 +452,23 @@ packages:
       '@lezer/common': 1.0.4
     dev: false
 
+  /@macfja/serializer@1.1.2:
+    resolution: {integrity: sha512-kqEg3Zu5/g3ivdeb+jP4rBVVdmtKXVsRwH+x9KdM2Y7d2mKLq54g+YLSgTQ4KwJvWmyHFvRq0ouX5Dr4H1Hw3Q==}
+    dev: false
+
+  /@macfja/svelte-persistent-store@2.4.0(svelte@4.2.0):
+    resolution: {integrity: sha512-01aumH+i4iIrr8GyGtRvKlgz58llvUpys3CTva1Hf4RR5/PmshRUSkl8q3vyT4beCf4lxDHnFxEq//QJyJFVbw==}
+    peerDependencies:
+      svelte: ^3.0 || ^4.0
+    dependencies:
+      '@macfja/serializer': 1.1.2
+      browser-cookies: 1.2.0
+      idb-keyval: 6.2.1
+      sjcl-codec-hex: 1.0.0
+      sjcl-es: 2.0.0
+      svelte: 4.2.0
+    dev: false
+
   /@noble/ciphers@0.2.0:
     resolution: {integrity: sha512-6YBxJDAapHSdd3bLDv6x2wRPwq4QFMUaB3HvljNBUTThDd12eSm7/3F+2lnfzx2jvM+S6Nsy0jEt9QbPqSwqRw==}
     dev: false
@@ -642,6 +665,10 @@ packages:
     dependencies:
       fill-range: 7.0.1
     dev: true
+
+  /browser-cookies@1.2.0:
+    resolution: {integrity: sha512-cg2WuoOJo+F+g2XjEaP8nmeRp1vDHjt7sqpKJMsTNXKrpyIBNVslYJeehvs6FEddj8usV2+qyRSBEX244yN5/g==}
+    dev: false
 
   /browserslist@4.21.10:
     resolution: {integrity: sha512-bipEBdZfVH5/pwrvqc+Ub0kUPVfGUhlKxbvfD+z1BDnPEO/X98ruXGA1WP5ASpAFKan7Qr6j736IacbZQuAlKQ==}
@@ -1158,6 +1185,10 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: true
 
+  /idb-keyval@6.2.1:
+    resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
+    dev: false
+
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -1633,6 +1664,21 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: true
 
+  /sjcl-bit-array@1.0.0:
+    resolution: {integrity: sha512-xoR134YJa7AHToLqCWuLYGpAdcBuLbSgwXe9c5HTIN4vr5TILXO/jVF8pLeXDhC7JTOvpmXUkiOupawVNTZVdQ==}
+    dev: false
+
+  /sjcl-codec-hex@1.0.0:
+    resolution: {integrity: sha512-lBBjqky1BEH+WZdABR/iSl2Pu3HO8n8r2D7nkzYLZfcR9ke4kUGMvO0ztRkla5oi4Esbc9pOlBtyGeMjYOU0ng==}
+    dependencies:
+      sjcl-bit-array: 1.0.0
+    dev: false
+
+  /sjcl-es@2.0.0:
+    resolution: {integrity: sha512-P8O+4pAt95XqmTlvvPdbmBggjAgSE0LQnhSEYUKYKepN176b/8K9zcVrrqhuLu5EUQyeCYy/56J9FzxvzvMavg==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
+
   /sorcery@0.11.0:
     resolution: {integrity: sha512-J69LQ22xrQB1cIFJhPfgtLuI6BpWRiWu1Y3vSsIwK/eAScqJxd/+CJlUuHQRdX2C9NGFamq+KqNywGgaThwfHw==}
     hasBin: true
@@ -1832,6 +1878,18 @@ packages:
     transitivePeerDependencies:
       - ts-node
     dev: true
+
+  /thememirror@2.0.1(@codemirror/language@6.9.0)(@codemirror/state@6.2.1)(@codemirror/view@6.17.1):
+    resolution: {integrity: sha512-d5i6FVvWWPkwrm4cHLI3t9AT1OrkAt7Ig8dtdYSofgF7C/eiyNuq6zQzSTusWTde3jpW9WLvA9J/fzNKMUsd0w==}
+    peerDependencies:
+      '@codemirror/language': ^6.0.0
+      '@codemirror/state': ^6.0.0
+      '@codemirror/view': ^6.0.0
+    dependencies:
+      '@codemirror/language': 6.9.0
+      '@codemirror/state': 6.2.1
+      '@codemirror/view': 6.17.1
+    dev: false
 
   /thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}

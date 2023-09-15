@@ -4,6 +4,7 @@
 	import Output from "$lib/repl/Output.svelte";
 	import { files } from "$lib/repl/state";
 	import Loading from "$lib/Loading.svelte";
+	import { theme } from "$lib/settings/store";
 
 	const isTop = typeof window === "object" && window.top === window;
 	const isSaved = true; // TODO
@@ -32,6 +33,8 @@
 		} else if (action === "run") {
 			files.set(event.data.files);
 			compileAndRun();
+		} else if (action === "theme_change") {
+			$theme = JSON.parse(localStorage["theme"]);
 		}
 	}
 

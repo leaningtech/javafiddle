@@ -2,7 +2,7 @@
 	import { onMount, tick } from "svelte";
 	import { basicSetup } from 'codemirror';
 	import { EditorView, keymap } from '@codemirror/view';
-	import { EditorState } from '@codemirror/state';
+	import { Compartment, EditorState } from '@codemirror/state';
 	import { indentWithTab } from '@codemirror/commands';
 	import { indentUnit } from '@codemirror/language';
 	import { lintGutter } from "@codemirror/lint";
@@ -10,10 +10,13 @@
 	import { files, selectedFilePath, type File } from "./state";
 	import "./codemirror.css";
 	import { compartment, diagnostic, parseCompileLog } from "./linter";
+	import { effectiveTheme } from "$lib/settings/store";
+	import { coolGlow, tomorrow } from "thememirror";
 
 	let container: HTMLDivElement;
 	let editorStates: Map<string, EditorState> = new Map();
 	let editorView: EditorView | undefined;
+	const themeCompartment = new Compartment;
 
 	$: reset($files);
 
@@ -23,6 +26,7 @@
 		indentUnit.of('    '),
 		lintGutter(),
 		compartment.of(diagnostic.of([])),
+		themeCompartment.of([]),
 	];
 
 	// Resets states to files
@@ -126,6 +130,18 @@
 				if (!state) continue;
 				editorStates.set(path, state.update(tr).state);
 			}
+		}
+	}
+
+	$: {
+		const theme = $effectiveTheme === "dark" ? coolGlow : tomorrow;
+		const tr = {
+			effects: themeCompartment.reconfigure(theme),
+		};
+
+		editorView?.dispatch(tr); // Current file
+		for (const [key, value] of editorStates.entries()) { // Other files
+			editorStates.set(key, value.update(tr).state);
 		}
 	}
 </script>

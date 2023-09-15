@@ -7,6 +7,7 @@
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
+	import { theme } from "./settings/store";
 
 	export let outputUrl: string;
 	
@@ -65,24 +66,32 @@
 			goto(url, { replaceState: true });
 		}
 	}
+
+	// Notify iframe of theme changes so it can reload its theme from localStorage
+	$: {
+		$theme;
+		iframe?.contentWindow?.postMessage({
+			action: "theme_change",
+		}, window.location.origin);
+	}
 </script>
 
 <svelte:window on:message={onMessage} />
 
-<div class="w-full h-full min-h-screen bg-white text-black font-sans flex flex-col">
+<div class="w-full h-full min-h-screen font-sans flex flex-col">
 	<Menu on:save={save} />
 	<div class="flex items-stretch flex-1">
 		<Sidebar />
 		<div class="flex-1 overflow-hidden">
 			<SplitPane type="vertical" min="64px" max="-64px">
 				<section slot="a" class="h-1/2 flex flex-col">
-					<div class="border-b border-stone-200 text-sm">
+					<div class="border-b border-gray-200 dark:border-gray-700 text-sm">
 						<FileTabs />
 					</div>
 
 					<Editor {compileLog} />
 				</section>
-				<section slot="b" class="border-t border-stone-200 overflow-hidden">
+				<section slot="b" class="border-t border-gray-200 dark:border-gray-700 overflow-hidden">
 					<div class="w-full h-full" class:hidden={!loading}>
 						<Loading />
 					</div>
