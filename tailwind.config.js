@@ -6,4 +6,7 @@ export default {
 	},
 	plugins: [],
 	darkMode: "class",
+	blocklist: [
+		"container", // conflicts with svelte-split-pane
+	]
 }
