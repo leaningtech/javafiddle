@@ -7,7 +7,7 @@ export const users = pgTable("users", {
 });
 
 export const fiddles = pgTable("fiddles", {
-	id: serial("id").primaryKey(),
+	id: text("id").primaryKey(),
 	userId: integer('user_id').references(() => users.id).notNull(),
 	created: timestamp("created", { withTimezone: true }).notNull().defaultNow(),
 	updated: timestamp("updated", { withTimezone: true }).notNull().defaultNow(),
@@ -17,7 +17,7 @@ export const fiddles = pgTable("fiddles", {
 
 export const fiddleFiles = pgTable("fiddle_files", {
 	id: serial("id").primaryKey(),
-	fiddleId: integer('fiddle_id').references(() => fiddles.id).notNull(),
+	fiddleId: text('fiddle_id').references(() => fiddles.id).notNull(),
 	path: text("path").notNull(),
 	content: text("content").notNull(),
 });

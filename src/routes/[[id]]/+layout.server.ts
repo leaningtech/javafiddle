@@ -3,8 +3,8 @@ import { fiddles, fiddleFiles } from '$lib/db/schema.js';
 import { redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 
-export async function load({ params }) {
-	if (!params.id) {
+export async function load({ params: { id } }) {
+	if (!id) {
 		return {
 			files: [
 				{
@@ -20,12 +20,6 @@ class Main {
 				},
 			]
 		};
-	}
-
-	let id = parseInt(params.id);
-	if (isNaN(id)) {
-		console.warn("invalid fiddle id", params.id);
-		throw redirect(302, "/");
 	}
 
 	const rows = await db.select().from(fiddles).where(eq(fiddles.id, id));

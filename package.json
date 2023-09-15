@@ -44,6 +44,7 @@
 		"svelte-kit-cookie-session": "^4.0.0",
 		"svelte-relative-time": "^0.0.4",
 		"thememirror": "^2.0.1",
+		"ytid": "^1.1.0",
 		"zod": "^3.22.2"
 	}
 }

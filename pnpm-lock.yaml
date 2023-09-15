@@ -50,6 +50,9 @@ dependencies:
   thememirror:
     specifier: ^2.0.1
     version: 2.0.1(@codemirror/language@6.9.0)(@codemirror/state@6.2.1)(@codemirror/view@6.17.1)
+  ytid:
+    specifier: ^1.1.0
+    version: 1.1.0
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -2047,6 +2050,10 @@ packages:
     resolution: {integrity: sha512-N/lyzTPaJasoDmfV7YTrYCI0G/3ivm/9wdG0aHuheKowWQwGTsK0Eoiw6utmzAnI6pkJa0DUVygvp3spqqEKXg==}
     engines: {node: '>= 14'}
     dev: true
+
+  /ytid@1.1.0:
+    resolution: {integrity: sha512-I7cZKy9YVGtOFSedmA4sfg/tvVMSSVdPSBC59wd5FVYnCyTuxNZiELPEFEK2OK4apm2V5J+NoeQEzdVWlhRdkA==}
+    dev: false
 
   /zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}

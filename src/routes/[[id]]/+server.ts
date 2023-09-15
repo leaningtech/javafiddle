@@ -3,6 +3,7 @@ import db from '$lib/db/conn.server.js';
 import { fiddleFiles, fiddles } from '$lib/db/schema.js';
 import { error, json } from '@sveltejs/kit';
 import { sql, and, eq, notInArray } from 'drizzle-orm';
+import { ytid } from "ytid";
 
 const data = z.object({
 	files: z.array(z.object({
@@ -18,9 +19,9 @@ export async function POST({ request, params, locals }) {
 
 	const { files } = data.parse(await request.json());
 
-	let fiddleId: number;
+	let fiddleId: string;
 	if (params.id) {
-		fiddleId = parseInt(params.id);
+		fiddleId = params.id;
 
 		// make sure it exists, user has permission to modify, and increase updated
 		const rows = await db.update(fiddles)
@@ -36,13 +37,14 @@ export async function POST({ request, params, locals }) {
 			.returning({ updatedId: fiddles.id });
 		if (rows.length === 0) throw error(403);
 	} else {
-		// create new fiddle and get id from it
-		const [{ insertedId }] = await db.insert(fiddles).values({
+		// create new fiddle 
+		fiddleId = ytid();
+		await db.insert(fiddles).values({
+			id: fiddleId,
 			userId,
 			title: "",
 			description: "",
-		}).returning({ insertedId: fiddles.id });
-		fiddleId = insertedId;
+		});
 	}
 
 	await db.transaction(async tx => {
