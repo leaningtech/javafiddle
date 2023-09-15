@@ -36,6 +36,7 @@
 		"@codemirror/state": "^6.2.1",
 		"@codemirror/view": "^6.17.1",
 		"@iconify/svelte": "^3.1.4",
+		"@rich_harris/svelte-split-pane": "^1.1.1",
 		"codemirror": "^6.0.1",
 		"drizzle-orm": "^0.28.6",
 		"postgres": "^3.3.5",

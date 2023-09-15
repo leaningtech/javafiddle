@@ -6,9 +6,7 @@
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
-	import { compile } from "svelte/compiler";
-
-	// TODO: use https://www.npmjs.com/package/@rich_harris/svelte-split-pane
+	import { SplitPane } from '@rich_harris/svelte-split-pane';
 
 	export let outputUrl: string;
 	
@@ -76,19 +74,21 @@
 	<div class="flex items-stretch flex-1">
 		<Sidebar />
 		<div class="flex-1 overflow-hidden">
-			<div class="h-1/2 flex flex-col">
-				<div class="border-b border-stone-200 text-sm">
-					<FileTabs />
-				</div>
+			<SplitPane type="vertical" min="64px" max="-64px">
+				<section slot="a" class="h-1/2 flex flex-col">
+					<div class="border-b border-stone-200 text-sm">
+						<FileTabs />
+					</div>
 
-				<Editor {compileLog} />
-			</div>
-			<div class="h-1/2 border-t border-stone-200 overflow-hidden">
-				<div class="w-full h-full" class:hidden={!loading}>
-					<Loading />
-				</div>
-				<iframe bind:this={iframe} src={outputUrl} class="w-full h-full" class:hidden={loading} title="Output" allowtransparency={true} frameborder={0} />
-			</div>
+					<Editor {compileLog} />
+				</section>
+				<section slot="b" class="border-t border-stone-200 overflow-hidden">
+					<div class="w-full h-full" class:hidden={!loading}>
+						<Loading />
+					</div>
+					<iframe bind:this={iframe} src={outputUrl} class="w-full h-full" class:hidden={loading} title="Output" allowtransparency={true} frameborder={0} />
+				</section>
+			</SplitPane>
 		</div>
 	</div>
 </div>
