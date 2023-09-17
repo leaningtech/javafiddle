@@ -59,6 +59,7 @@
 					return;
 				}
 				files.update($files => $files.filter(f => f.path !== file.path));
+				$selectedFilePath = "Main.java";
 			}}
 			class="ml-1 -mr-3 opacity-50"
 			class:!opacity-0={!isSelected}
