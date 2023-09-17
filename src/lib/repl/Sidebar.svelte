@@ -3,14 +3,17 @@
 	import { isSidebarOpen } from "./state";
 	import { blur } from 'svelte/transition';
 	import { effectiveTheme } from "$lib/settings/store";
+	import FiddleList from "./FiddleList.svelte";
 
 	import cheerpjDark from '$lib/assets/cheerpj/logotype-white.svg';
 	import cheerpjLight from '$lib/assets/cheerpj/logotype-grey.svg';
 	$: cheerpjLogotypeUrl = $effectiveTheme === "dark" ? cheerpjDark : cheerpjLight;
+
+	export let userFiddles: { id: string, title: string, updated: Date }[];
 </script>
 
-<aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width] flex flex-col" class:!w-80={$isSidebarOpen}>
-	<div class="p-2 text-right">
+<aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width] flex flex-col overflow-hidden" class:!w-80={$isSidebarOpen}>
+	<div class="p-1.5 text-right shadow-none animate-shadow" class:shadow={$isSidebarOpen}>
 		<button class="w-6 h-6 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-500 rounded inline-flex items-center justify-center" on:click={() => $isSidebarOpen = !$isSidebarOpen}>
 			{#if $isSidebarOpen}
 				<Icon icon="mi:close" />
@@ -20,12 +23,16 @@
 		</button>
 	</div>
 
-	<div class="w-80 grow">
-		<div class="h-1/2">
-			<!-- TODO: menu -->
+	<div class="w-80 grow overflow-hidden">
+		<div class="h-1/2 overflow-y-auto">
+			{#if $isSidebarOpen}
+				<div transition:blur={{ duration: 150 }}>
+					<FiddleList fiddles={userFiddles} />
+				</div>
+			{/if}
 		</div>
 		{#if $isSidebarOpen}
-			<div class="h-1/2 flex flex-col" transition:blur={{ duration: 150 }}>
+			<div class="h-1/2 overflow-y-auto flex flex-col" transition:blur={{ duration: 150 }}>
 				<div class="grow p-4 leading-tight bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 text-sm">
 					<p>
 						JavaFiddle is an online tool to <b>build</b> and <b>share</b> snippets of Java code.

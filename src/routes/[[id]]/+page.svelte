@@ -4,4 +4,4 @@
 	export let data;
 </script>
 
-<Repl updated={data.fiddle?.updated} outputUrl={data.outputUrl} />
+<Repl updated={data.fiddle?.updated} outputUrl={data.outputUrl} userFiddles={data.userFiddles} />

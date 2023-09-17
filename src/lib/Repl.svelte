@@ -11,6 +11,7 @@
 
 	export let updated: Date | undefined;
 	export let outputUrl: string;
+	export let userFiddles: { id: string, title: string, updated: Date }[];
 	let isSaving = false;
 	let isSaved = false;
 
@@ -89,10 +90,10 @@
 
 <svelte:window on:message={onMessage} />
 
-<div class="w-full h-full min-h-screen font-sans flex flex-col">
+<div class="w-full h-screen font-sans flex flex-col overflow-hidden">
 	<Menu {updated} {isSaving} {isSaved} on:save={save} />
-	<div class="flex items-stretch flex-1">
-		<Sidebar />
+	<div class="flex items-stretch flex-1 overflow-hidden">
+		<Sidebar {userFiddles} />
 		<div class="flex-1 overflow-hidden">
 			<SplitPane type="vertical" min="64px" max="-64px">
 				<section slot="a" class="h-1/2 flex flex-col">
