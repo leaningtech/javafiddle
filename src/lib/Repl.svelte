@@ -21,14 +21,17 @@
 
 	files.subscribe(() => {
 		isSaved = false;
+		run();
+	});
 
+	function run() {
 		if (!loading) {
 			loading = true;
 			iframe?.contentWindow?.postMessage({
 				action: "reload",
 			}, window.location.origin);
 		}
-	});
+	}
 
 	function onMessage(event: MessageEvent) {
 		if (event.origin !== window.location.origin) return;
@@ -91,7 +94,7 @@
 <svelte:window on:message={onMessage} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
-	<Menu {updated} {isSaving} {isSaved} on:save={save} />
+	<Menu {updated} {isSaving} {isSaved} on:save={save} on:run={run} />
 	<div class="flex items-stretch flex-1 overflow-hidden">
 		<Sidebar {userFiddles} />
 		<div class="flex-1 overflow-hidden">

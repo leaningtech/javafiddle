@@ -8,11 +8,11 @@
 </script>
 
 {#if isLoggedIn}
-	<a href="/auth/logout" class="text-sm rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-3 py-2">
+	<a href="/auth/logout" class="text-xs hover:underline text-gray-500 dark:text-gray-400">
 		Sign out
 	</a>
 {:else}
 	<a href={githubLoginUrl} class="text-sm rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-3 py-2">
-		Sign in
+		Sign in to save
 	</a>
 {/if}

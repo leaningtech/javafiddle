@@ -4,13 +4,26 @@
 	import Icon from '@iconify/svelte';
 	import ThemeSwitcher from "$lib/settings/ThemeSwitcher.svelte";
 	import { relativeTime } from 'svelte-relative-time';
+	import { page } from "$app/stores";
+
+	$: isLoggedIn = typeof $page.data.session.userId === "number";
 
 	const dispatch = createEventDispatcher<{ save: undefined, run: undefined }>();
 
 	export let updated: Date | undefined;
 	export let isSaving = false;
 	export let isSaved = true;
+
+	function onkey(e: KeyboardEvent) {
+		console.log(e.ctrlKey, e.metaKey)
+		if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+			e.preventDefault();
+			dispatch("save", undefined);
+		}
+	}
 </script>
+
+<svelte:window on:keydown={onkey} />
 
 <header class="px-4 flex items-center justify-between gap-4 relative shadow dark:shadow-none">
 	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
@@ -19,21 +32,24 @@
 
 	<ul class="my-3 text-sm flex gap-2 items-center">
 		<li>
-			<button on:click={() => dispatch("run", undefined)} class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1">
+			<button on:click={() => dispatch("run", undefined)} class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
 				<Icon icon="mi:play" class="w-5 h-5 mr-1" />
-				New
+				Run
 			</button>
 		</li>
 		<li class="flex gap-2 items-center">
-			<button
-				on:click={() => {
-					if (!isSaving) dispatch("save", undefined)
-				}}
-				class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1"
-			>
-				<Icon icon="mi:cloud-upload" class="w-5 h-5 mr-1" />
-				Save
-			</button>
+			{#if isLoggedIn}
+				<button
+					on:click={() => {
+						if (!isLoggedIn) alert("Log in to save")
+						else if (!isSaving) dispatch("save", undefined)
+					}}
+					class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8"
+				>
+					<Icon icon="mi:cloud-upload" class="w-5 h-5 mr-1" />
+					Save
+				</button>
+			{/if}
 			<span class="text-xs dark:text-gray-500">
 				{#if isSaving}
 					Saving...
@@ -44,12 +60,12 @@
 				{/if}
 			</span>
 		</li>
-	</ul>
-	<div class="grow" />
-	<ul class="flex items-center gap-4">
 		<li>
 			<SessionButton />
 		</li>
+	</ul>
+	<div class="grow" />
+	<ul class="flex items-center gap-4">
 		<li>
 			<ThemeSwitcher />
 		</li>
