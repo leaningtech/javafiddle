@@ -1,4 +1,4 @@
 export async function load({ locals }) {
-	locals.session.destroy();
+	await locals.session.destroy();
 	return {};
 }

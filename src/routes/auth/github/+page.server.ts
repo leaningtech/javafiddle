@@ -44,7 +44,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	const user = githubUser.parse(await userReq.json());
 
 	const dbUser = await getOrCreateUserByGithubId(user.id);
-	locals.session.set({ userId: dbUser.id });
+	await locals.session.set({ userId: dbUser.id });
 
 	// Can't redirect because we need to set cookie, so +page.svelte will do the redirect client-side
 	return {};

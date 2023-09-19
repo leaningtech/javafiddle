@@ -4,7 +4,7 @@
 
 <svelte:head>
 	<meta name="robots" content="noindex">
-	<meta http-equiv="refresh" content="1; url=/">
+	<meta http-equiv="refresh" content="0; url=/">
 </svelte:head>
 
 <div class="w-screen h-screen">
