@@ -45,32 +45,29 @@
 			<ThemeSwitcher />
 		</li>
 		<li>
-			<button on:click={() => dispatch("run", undefined)} class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
+			<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
 				<Icon icon="mi:play" class="w-5 h-5 mr-1" />
 				Run
 			</button>
 		</li>
-		<li class="flex gap-2 items-center">
-			{#if isLoggedIn}
+		{#if isLoggedIn}
+			<li>
 				<button
 					on:click={() => {
 						if (!isLoggedIn) alert("Log in to save")
 						else if (!isSaving) dispatch("save", undefined)
 					}}
-					class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8"
+					class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8"
 				>
-					<Icon icon="mi:cloud-upload" class="w-5 h-5 mr-1" />
+					{#if isSaved}
+						<Icon icon="mi:check" class="w-5 h-5 mr-1" />
+					{:else}
+						<Icon icon="mi:cloud-upload" class="w-5 h-5 mr-1" />
+					{/if}
 					Save
 				</button>
-			{/if}
-			<span class="text-xs dark:text-gray-500">
-				{#if isSaving}
-					Saving...
-				{:else if isSaved}
-					Saved
-				{/if}
-			</span>
-		</li>
+			</li>
+		{/if}
 		<li>
 			<SessionButton />
 		</li>
