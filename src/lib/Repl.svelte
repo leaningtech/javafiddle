@@ -7,7 +7,7 @@
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
-	import { theme } from "./settings/store";
+	import { autoRun, theme } from "./settings/store";
 
 	export let updated: Date | undefined;
 	export let outputUrl: string;
@@ -21,7 +21,7 @@
 
 	files.subscribe(() => {
 		isSaved = false;
-		run();
+		if ($autoRun) run();
 	});
 
 	function run() {

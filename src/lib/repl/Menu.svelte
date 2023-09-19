@@ -2,10 +2,11 @@
 	import SessionButton from "./menu/SessionButton.svelte";
 	import { createEventDispatcher } from "svelte";
 	import Icon from '@iconify/svelte';
-	import ThemeSwitcher from "$lib/settings/ThemeSwitcher.svelte";
 	import { relativeTime } from 'svelte-relative-time';
 	import { page } from "$app/stores";
 	import FiddleTitle from "./menu/FiddleTitle.svelte";
+	import SettingsButton from "./menu/SettingsButton.svelte";
+	import { autoRun } from "$lib/settings/store";
 
 	$: isLoggedIn = typeof $page.data.session.userId === "number";
 
@@ -40,16 +41,15 @@
 		</div>
 	</div>
 
-	<ul class="flex items-center gap-4">
-		<li>
-			<ThemeSwitcher />
-		</li>
-		<li>
-			<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
-				<Icon icon="mi:play" class="w-5 h-5 mr-1" />
-				Run
-			</button>
-		</li>
+	<ul class="flex items-center gap-2">
+		{#if !$autoRun}
+			<li>
+				<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
+					<Icon icon="mi:play" class="w-5 h-5 mr-1" />
+					Run
+				</button>
+			</li>
+		{/if}
 		{#if isLoggedIn}
 			<li>
 				<button
@@ -70,6 +70,9 @@
 		{/if}
 		<li>
 			<SessionButton />
+		</li>
+		<li>
+			<SettingsButton />
 		</li>
 	</ul>
 </header>

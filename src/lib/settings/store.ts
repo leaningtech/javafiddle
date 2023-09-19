@@ -11,3 +11,5 @@ export const effectiveTheme = derived(theme, ($theme) => {
 	}
 	return $theme;
 });
+
+export const autoRun = writable<boolean>(true);
