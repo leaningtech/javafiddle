@@ -2,7 +2,7 @@
 	import Menu from "./repl/Menu.svelte";
 	import Sidebar from "./repl/Sidebar.svelte";
 	import Editor from "./repl/Editor.svelte";
-	import { files } from "./repl/state";
+	import { fiddleTitle, files } from "./repl/state";
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
@@ -56,6 +56,7 @@
 		isSaving = true;
 
 		const body = {
+			title: $fiddleTitle,
 			files: $files,
 		};
 		const response = await fetch("", {

@@ -5,6 +5,7 @@
 	import ThemeSwitcher from "$lib/settings/ThemeSwitcher.svelte";
 	import { relativeTime } from 'svelte-relative-time';
 	import { page } from "$app/stores";
+	import FiddleTitle from "./menu/FiddleTitle.svelte";
 
 	$: isLoggedIn = typeof $page.data.session.userId === "number";
 
@@ -25,12 +26,24 @@
 
 <svelte:window on:keydown={onkey} />
 
-<header class="px-4 flex items-center justify-between gap-4 relative shadow dark:shadow-none">
+<header class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none">
 	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
 		<h1>JavaFiddle</h1>
 	</a>
 
-	<ul class="my-3 text-sm flex gap-2 items-center">
+	<div class="grow flex flex-col justify-center self-stretch">
+		<FiddleTitle />
+		<div class="h-4 leading-3 text-xs text-gray-500 dark:text-gray-400">
+			{#if updated}
+				<span use:relativeTime={{ date: updated }} />
+			{/if}
+		</div>
+	</div>
+
+	<ul class="flex items-center gap-4">
+		<li>
+			<ThemeSwitcher />
+		</li>
 		<li>
 			<button on:click={() => dispatch("run", undefined)} class="flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
 				<Icon icon="mi:play" class="w-5 h-5 mr-1" />
@@ -55,19 +68,11 @@
 					Saving...
 				{:else if isSaved}
 					Saved
-				{:else if updated}
-					<span use:relativeTime={{ date: updated }} />
 				{/if}
 			</span>
 		</li>
 		<li>
 			<SessionButton />
-		</li>
-	</ul>
-	<div class="grow" />
-	<ul class="flex items-center gap-4">
-		<li>
-			<ThemeSwitcher />
 		</li>
 	</ul>
 </header>

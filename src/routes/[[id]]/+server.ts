@@ -11,13 +11,14 @@ const data = z.object({
 		path: z.string(),
 		content: z.string(),
 	})),
+	title: z.string(),
 });
 
 export async function POST({ request, params, locals }) {
 	const { userId } = locals.session.data;
 	if (typeof userId !== "number") throw error(401);
 
-	const { files } = data.parse(await request.json());
+	const { files, title } = data.parse(await request.json());
 
 	let fiddleId: string;
 	if (params.id) {
@@ -26,6 +27,7 @@ export async function POST({ request, params, locals }) {
 		// make sure it exists, user has permission to modify, and increase updated
 		const rows = await db.update(fiddles)
 			.set({
+				title,
 				updated: sql`CURRENT_TIMESTAMP`,
 			})
 			.where(
@@ -42,7 +44,7 @@ export async function POST({ request, params, locals }) {
 		await db.insert(fiddles).values({
 			id: fiddleId,
 			userId,
-			title: "",
+			title,
 			description: "",
 		});
 	}
