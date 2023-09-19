@@ -14,5 +14,4 @@ export const handle = handleSession({
 	secret: COOKIE_SECRET,
 	expires: 30,
 	expires_in: "days",
-	rolling: true,
 });
