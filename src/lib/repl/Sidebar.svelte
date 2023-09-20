@@ -64,7 +64,7 @@
 						</a>
 					</div>
 				</div>
-				<a class="p-6 border-l-8 border-orange-500 bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300" href="https://labs.leaningtech.com/cheerpj">
+				<a class="p-6 border-t-4 border-orange-500 bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300" href="https://labs.leaningtech.com/cheerpj">
 					<img src={cheerpjLogotypeUrl} alt="CheerpJ" class="h-12 mb-4" />
 					<p class="text-sm leading-tight">
 						Run Java applications in the browser with CheerpJ. Supports applets, JNLP, Web Start, Oracle Forms, and more.
