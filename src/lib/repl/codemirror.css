@@ -10,3 +10,11 @@
 	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* font-mono */
 	font-size: 13px;
 }
+
+.dark .cm-editor, .dark .cm-gutters {
+	background-color: rgb(3 7 18 / 1); /* bg-gray-950 */
+}
+
+.dark .cm-gutters {
+	border-right: 1px solid rgb(55 65 81 / 1);
+}

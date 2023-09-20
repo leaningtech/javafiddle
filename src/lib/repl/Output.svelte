@@ -38,7 +38,7 @@
 	{/if}	
 </div>
 
-<div class="flex-1 p-3 overflow-scroll bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100" class:hidden={tabIndex !== 0}>
+<div class="flex-1 p-3 overflow-scroll bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100" class:hidden={tabIndex !== 0}>
 	<!-- CheerpJ implicitly looks for a #console to write to -->
 	<pre class="font-mono text-sm h-0" bind:this={console} id="console"></pre> <!-- TODO use xterm -->
 </div>
