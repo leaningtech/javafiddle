@@ -7,6 +7,7 @@
 	import SettingsButton from "./menu/SettingsButton.svelte";
 	import { autoRun } from "$lib/settings/store";
 	import { PUBLIC_GITHUB_CLIENT_ID } from "$env/static/public";
+	import { invalidateAll } from "$app/navigation";
 
 	$: isLoggedIn = typeof $page.data.session.userId === "number";
 
@@ -69,7 +70,22 @@
 				</button>
 			</li>
 		{:else}
-			<a href={githubLoginUrl} class="text-sm rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-3 py-1 h-8 flex items-center">
+			<a
+				href={githubLoginUrl}
+				class="text-sm rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-3 py-1 h-8 flex items-center"
+				target="_blank"
+				on:click={evt => {
+					const win = window.open(githubLoginUrl, "_blank");
+					if (!win) return;
+					evt.preventDefault();
+					win.addEventListener("message", (evt) => {
+						if (evt.origin === window.location.origin && evt.data.action === "login") {
+							dispatch("save", undefined);
+							invalidateAll();
+						}
+					});
+				}}
+			>
 				<Icon icon="mi:cloud-upload" class="w-5 h-5 mr-1" />
 				Log in to save
 			</a>
