@@ -90,9 +90,14 @@
 			action: "theme_change",
 		}, window.location.origin);
 	}
+
+	function onBeforeUnload(evt: BeforeUnloadEvent) {
+		evt.preventDefault();
+		return (evt.returnValue = "");
+	}
 </script>
 
-<svelte:window on:message={onMessage} />
+<svelte:window on:message={onMessage} on:beforeunload={isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
 	<Menu {updated} {isSaving} {isSaved} on:save={save} on:run={run} />
