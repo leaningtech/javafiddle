@@ -56,8 +56,7 @@
 			<li>
 				<button
 					on:click={() => {
-						if (!isLoggedIn) alert("Log in to save")
-						else if (!isSaving) dispatch("save", undefined)
+						if (!isSaving) dispatch("save", undefined)
 					}}
 					class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8"
 				>
