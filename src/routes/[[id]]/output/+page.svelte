@@ -5,9 +5,14 @@
 	import { files, type File } from "$lib/repl/state";
 	import Loading from "$lib/Loading.svelte";
 	import { theme } from "$lib/settings/store";
+	import { onMount } from "svelte";
 
-	const isTop = typeof window === "object" && window.top === window;
-	const isSaved = true; // TODO
+	let isTop = false;
+	let isShared = false;
+	onMount(() => {
+		isTop = window.top === window;
+		isShared = window.location.pathname !== "/output";
+	});
 
 	let loading = true;
 
@@ -82,7 +87,7 @@
 </div>
 
 <div class="flex flex-col w-screen h-screen overflow-hidden" class:hidden={loading}>
-	<Output bind:console={consoleEl} bind:display={display} showLink={!isTop && isSaved} />
+	<Output bind:console={consoleEl} bind:display={display} showLink={!isTop && isShared} />
 </div>
 
 <CheerpJ on:ready={ready} {display} />
