@@ -40,6 +40,7 @@
 		"@rich_harris/svelte-split-pane": "^1.1.1",
 		"codemirror": "^6.0.1",
 		"drizzle-orm": "^0.28.6",
+		"lz-string": "^1.5.0",
 		"postgres": "^3.3.5",
 		"svelte-kit-cookie-session": "^4.0.0",
 		"svelte-relative-time": "^0.0.4",

@@ -1,5 +1,5 @@
 export function load({ url }) {
-	let outputUrl = url.toString();
+	let outputUrl = url.pathname;
 	if (!outputUrl.endsWith("/")) outputUrl += "/";
 	outputUrl += "output";
 	return {
