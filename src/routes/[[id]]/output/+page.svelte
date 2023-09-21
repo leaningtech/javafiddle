@@ -2,7 +2,7 @@
 	import { browser } from "$app/environment";
 	import CheerpJ from "$lib/CheerpJ.svelte";
 	import Output from "$lib/repl/Output.svelte";
-	import { files } from "$lib/repl/state";
+	import { files, type File } from "$lib/repl/state";
 	import Loading from "$lib/Loading.svelte";
 	import { theme } from "$lib/settings/store";
 
@@ -58,9 +58,20 @@
 		}
 
 		consoleEl.innerHTML = "";
-		await cheerpjRunMain("fiddle.Main", "/app/tools.jar:/files/");
+		await cheerpjRunMain(deriveMainClass($files[0]), "/app/tools.jar:/files/");
 		loading = false;
 		window.top?.postMessage({ action: "running", compileLog }, window.location.origin);
+	}
+
+	function deriveMainClass(file: File) {
+		const className = file.path.split("/").pop()!.replace(".java", "");
+		const match = file.content.match(/package\s+(.+);/);
+		if (match && match.length > 1) {
+			const packageName = match[1];
+			return `${packageName}.${className}`;
+		} else {
+			return className;
+		}
 	}
 </script>
 
