@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { fiddleTitle, isFiddleOwner } from "../state";
+	import { fiddleTitle } from "../state";
 
 	let isEditing = false;
 
@@ -23,10 +23,8 @@
 {:else}
 	<h1 class="text-lg flex items-center gap-1.5">
 		{$fiddleTitle || "Untitled"}
-		{#if $isFiddleOwner}
-			<button on:click={() => isEditing = true}>
-				<Icon icon="mi:edit" class="`sw-5 h-5" />
-			</button>
-		{/if}
+		<button on:click={() => isEditing = true}>
+			<Icon icon="mi:edit" class="`sw-5 h-5" />
+		</button>
 	</h1>
 {/if}

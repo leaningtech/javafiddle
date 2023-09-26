@@ -16,9 +16,3 @@
 		</li>
 	{/each}
 </ul>
-
-{#if fiddles.length === 0}
-	<div class="text-gray-500 p-4 leading-tight">
-		Sign in and save your fiddles to view them here.
-	</div>
-{/if}

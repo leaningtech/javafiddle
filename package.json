@@ -16,7 +16,6 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"autoprefixer": "^10.4.15",
-		"drizzle-kit": "^0.19.13",
 		"postcss": "^8.4.29",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -39,13 +38,9 @@
 		"@macfja/svelte-persistent-store": "^2.4.0",
 		"@rich_harris/svelte-split-pane": "^1.1.1",
 		"codemirror": "^6.0.1",
-		"drizzle-orm": "^0.28.6",
 		"lz-string": "^1.5.0",
-		"postgres": "^3.3.5",
-		"svelte-kit-cookie-session": "^4.0.0",
 		"svelte-relative-time": "^0.0.4",
 		"thememirror": "^2.0.1",
-		"ytid": "^1.1.0",
 		"zod": "^3.22.2"
 	}
 }

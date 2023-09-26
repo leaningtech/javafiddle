@@ -8,12 +8,13 @@
 	import Loading from "./Loading.svelte";
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { autoRun, theme } from "./settings/store";
+	import { compress } from "./compress-fiddle";
+	import { onMount } from "svelte";
 
 	export let updated: Date | undefined;
 	export let outputUrl: string;
 	export let userFiddles: { id: string, title: string, updated: Date }[];
-	let isSaving = false;
-	let isSaved = false;
+	let isSaved = true;
 
 	let iframe: HTMLIFrameElement;
 	let loading = false;
@@ -22,6 +23,12 @@
 	files.subscribe(() => {
 		isSaved = false;
 		if ($autoRun) run();
+	});
+
+	// files is set by +layout.svelte on load, but we want to keep isSaved true on load
+	// i.e. undo above subscription
+	onMount(() => {
+		isSaved = true;
 	});
 
 	function run() {
@@ -52,35 +59,16 @@
 		}
 	}
 
-	async function save() {
-		isSaving = true;
-
-		const body = {
+	async function share() {
+		updated = new Date;
+		const id = compress({
 			title: $fiddleTitle,
+			updated,
 			files: $files,
-		};
-		const response = await fetch("", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
 		});
-		isSaving = false;
-		if (!response.ok) {
-			console.error("save failed", response.status, await response.text());
-			return;
-		}
-
-		updated = new Date();
 		isSaved = true;
-
-		// navigate if needed
-		const { fiddleId } = await response.json();
-		const url = "/" + fiddleId;
-		if (window.location.pathname != url) {
-			goto(url, { replaceState: true });
-		}
+		await goto(`/${id}`, { replaceState: true });
+		await navigator.clipboard.writeText(window.location.toString());
 	}
 
 	// Notify iframe of theme changes so it can reload its theme from localStorage
@@ -100,7 +88,7 @@
 <svelte:window on:message={onMessage} on:beforeunload={isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
-	<Menu {updated} {isSaving} {isSaved} on:save={save} on:run={run} />
+	<Menu {updated} on:share={share} on:run={run} />
 	<div class="flex items-stretch flex-1 overflow-hidden">
 		<Sidebar {userFiddles} />
 		<div class="flex-1 overflow-hidden">

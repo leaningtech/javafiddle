@@ -21,7 +21,7 @@
 			// Tell parent frame we are ready to recieve files
 			window.top.postMessage({ action: "ready" }, window.location.origin);
 		} else {
-			// Load files from server
+			// Load files from load function 
 			files.set($files); // Force file write
 			compileAndRun();
 		}

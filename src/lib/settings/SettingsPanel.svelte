@@ -1,9 +1,6 @@
 <script lang="ts">
 	import ThemeSwitcher from "./ThemeSwitcher.svelte";
 	import { autoRun } from "./store";
-	import { page } from "$app/stores";
-
-	$: isLoggedIn = typeof $page.data.session.userId === "number";
 </script>
 
 <!-- triangle pointing above -->
@@ -25,13 +22,4 @@
 		<input type="checkbox" bind:checked={$autoRun} id="auto-run" />
 		<label for="auto-run" class="grow">Run code automatically</label>
 	</div>
-
-	{#if isLoggedIn}
-		<div class="border-t border-gray-300 dark:border-gray-700 my-3" />
-
-		<h3 class="font-semibold">Account</h3>
-		<a href="/auth/logout" class="hover:underline text-gray-500 dark:text-gray-400">
-			Log out
-		</a>
-	{/if}
 </div>

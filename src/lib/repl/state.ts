@@ -2,7 +2,6 @@ import { writable } from "svelte/store";
 import { persist, createLocalStorage } from "@macfja/svelte-persistent-store";
 
 export type File = {
-	id?: number,
 	path: string,
 	content: string,
 };
@@ -28,5 +27,3 @@ export const selectedFilePath = writable<string>("Main.java");
 export const isSidebarOpen = persist(writable(true), createLocalStorage(), "isSidebarOpen");
 
 export const fiddleTitle = writable<string>("");
-
-export const isFiddleOwner = writable<boolean>(true);

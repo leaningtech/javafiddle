@@ -20,4 +20,4 @@
 	});
 </script>
 
-<Repl updated={data.fiddle?.updated} outputUrl={data.outputUrl} userFiddles={data.userFiddles} />
+<Repl updated={data.fiddle.updated} outputUrl={data.outputUrl} userFiddles={[]} />
