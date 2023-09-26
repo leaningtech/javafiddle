@@ -39,9 +39,6 @@
 							Runs entirely <b>in your browser</b>.
 						</li>
 						<li>
-							Works <b>offline</b>.
-						</li>
-						<li>
 							Supports all of Java SE 8, including Swing.
 						</li>
 					</ul>
