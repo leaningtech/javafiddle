@@ -44,7 +44,7 @@
 	}
 
 	let consoleEl: HTMLPreElement;
-	let display: HTMLDivElement;
+	let display: HTMLElement;
 
 	async function compileAndRun() {
 		if (!browser) return;

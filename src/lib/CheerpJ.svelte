@@ -4,7 +4,7 @@
 
 	const dispatch = createEventDispatcher<{ ready: undefined }>();
 
-	export let display: HTMLDivElement;
+	export let display: HTMLElement;
 
 	let promise: Promise<string | void> = new Promise(() => {});
 	let error = false;
@@ -27,7 +27,9 @@
 			return;
 		}
 
-		await cheerpjInit();
+		await cheerpjInit({
+			status: "none",
+		});
 		cheerpjCreateDisplay(-1, -1, display);
 		dispatch("ready");
 	}
