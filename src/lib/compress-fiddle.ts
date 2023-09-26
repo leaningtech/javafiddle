@@ -1,4 +1,4 @@
-import { decompressFromEncodedURIComponent, compressToEncodedURIComponent } from "lz-string";
+import lz from "lz-string";
 import z from "zod"
 
 const fiddle = z.object({
@@ -13,9 +13,9 @@ const fiddle = z.object({
 export type Fiddle = z.infer<typeof fiddle>;
 
 export function compress(data: Fiddle): string {
-	return compressToEncodedURIComponent(JSON.stringify(data));
+	return lz.compressToEncodedURIComponent(JSON.stringify(data));
 }
 
 export function decompress(str: string): Fiddle {
-	return fiddle.parse(JSON.parse(decompressFromEncodedURIComponent(str)));
+	return fiddle.parse(JSON.parse(lz.decompressFromEncodedURIComponent(str)));
 }
