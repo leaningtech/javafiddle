@@ -1,4 +1,4 @@
-const cheerpjInit: (options: object) => Promise<void>;
+const cheerpjInit: (options?: object) => Promise<void>;
 const cheerpjRunMain: any;
 const cheerpjRunJar: any;
 const cheerpjRunLibrary: any;

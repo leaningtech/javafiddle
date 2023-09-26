@@ -27,11 +27,7 @@
 			return;
 		}
 
-		await cheerpjInit({
-			version: 8, // XXX: undocumented param
-			// TODO: https://github.com/reportmill/CJDom/tree/main ?
-			javaProperties: ["java.protocol.handler.pkgs=com.leaningtech.handlers"],
-		});
+		await cheerpjInit();
 		cheerpjCreateDisplay(-1, -1, display);
 		dispatch("ready");
 	}
