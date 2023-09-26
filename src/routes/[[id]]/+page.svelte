@@ -20,4 +20,4 @@
 	});
 </script>
 
-<Repl updated={data.fiddle.updated} outputUrl={data.outputUrl} />
+<Repl outputUrl={data.outputUrl} />
