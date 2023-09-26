@@ -32,6 +32,7 @@
 	<div class="grow" />
 
 	{#if showLink}
+		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" target="_blank" rel="noreferrer" class="px-2 py-2" title="Open in new tab">
 			<Icon icon="mi:external-link" class="w-5 h-5" />
 		</a>
