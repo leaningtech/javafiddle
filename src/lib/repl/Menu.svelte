@@ -6,6 +6,7 @@
 	import SettingsButton from "./menu/SettingsButton.svelte";
 	import { autoRun } from "$lib/settings/store";
 	import { blur } from 'svelte/transition';
+	import FavouriteButton from "./menu/FavouriteButton.svelte";
 
 	const dispatch = createEventDispatcher<{ share: undefined, run: undefined }>();
 
@@ -51,6 +52,7 @@
 				URL copied to clipboard
 			</li>
 		{/if}
+		<FavouriteButton />
 		{#if !$autoRun}
 			<li>
 				<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">

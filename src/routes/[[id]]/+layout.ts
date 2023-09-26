@@ -1,6 +1,6 @@
-import { decompress } from '$lib/compress-fiddle.js';
+import { decompress, type Fiddle } from '$lib/compress-fiddle.js';
 
-export async function load({ params: { id } }) {
+export async function load({ params: { id } }): Promise<{ fiddle: Fiddle }> {
 	if (!id) {
 		return {
 			fiddle: {

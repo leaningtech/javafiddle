@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 	import { createEventDispatcher } from "svelte";
+	import Favourites from "./Favourites.svelte";
+	import { browser } from "$app/environment";
 
 	const dispatch = createEventDispatcher<{ selectOption: number }>();
 
@@ -8,7 +10,7 @@
 
 	const options = [
 		{
-			label: "Favourites",
+			label: (browser && navigator.language === "en-GB") ? "Favourites" : "Favorites",
 			icon: "mi:heart",
 			color: "red",
 		},
@@ -28,16 +30,18 @@
 </script>
 
 {#if selectedOption}
-	<button
-		class="flex items-center gap-3 px-2.5 h-10 w-full border-y dark:border-gray-700 font-medium"
-		on:click={() => selectedOptionIndex = -1}
-	>
-		<Icon icon="mi:chevron-left" class="w-5 h-5" />
-		{selectedOption.label}
-	</button>
-	<div>
-		<!-- TODO -->
+	<div class="border-y dark:border-gray-700">
+		<button
+			class="flex items-center gap-3 px-2.5 h-10 w-full font-medium"
+			on:click={() => selectedOptionIndex = -1}
+		>
+			<Icon icon="mi:chevron-left" class="w-5 h-5" />
+			{selectedOption.label}
+		</button>
 	</div>
+	{#if selectedOptionIndex === 0}
+		<Favourites />
+	{/if}
 {:else}
 	<ul>
 		{#each options as option, index}

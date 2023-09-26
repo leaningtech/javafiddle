@@ -24,7 +24,8 @@
 	<h1 class="text-lg flex items-center gap-1.5">
 		{$fiddleTitle || "Untitled"}
 		<button on:click={() => isEditing = true}>
-			<Icon icon="mi:edit" class="`sw-5 h-5" />
+			<Icon icon="mi:edit" />
+			<span class="sr-only">Edit title</span>
 		</button>
 	</h1>
 {/if}

@@ -11,7 +11,7 @@
 </script>
 
 <aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width] flex flex-col overflow-hidden" class:!w-80={$isSidebarOpen}>
-	<div class="text-right shadow-none animate-shadow" class:shadow={$isSidebarOpen}>
+	<div class="text-right shadow-none animate-shadow" class:!shadow={$isSidebarOpen}>
 		<button class="w-10 h-10 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 inline-flex items-center justify-center" on:click={() => $isSidebarOpen = !$isSidebarOpen}>
 			{#if $isSidebarOpen}
 				<Icon icon="mi:close" class="w-4 h-4" />
