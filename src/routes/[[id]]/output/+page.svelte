@@ -63,7 +63,7 @@
 		}
 
 		consoleEl.innerHTML = "";
-		await cheerpjRunMain(deriveMainClass($files[0]), "/app/tools.jar:/files/");
+		cheerpjRunMain(deriveMainClass($files[0]), "/app/tools.jar:/files/");
 		loading = false;
 		window.top?.postMessage({ action: "running", compileLog }, window.location.origin);
 	}
