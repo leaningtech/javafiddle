@@ -7,10 +7,9 @@
 	import { autoRun } from "$lib/settings/store";
 	import { blur } from 'svelte/transition';
 	import FavouriteButton from "./menu/FavouriteButton.svelte";
+	import { fiddleUpdated } from "./state";
 
 	const dispatch = createEventDispatcher<{ share: undefined, run: undefined }>();
-
-	export let updated: Date | undefined;
 
 	let showShareMessage = false;
 	let timeoutId: number | undefined;
@@ -39,16 +38,16 @@
 
 	<div class="grow flex flex-col justify-center self-stretch">
 		<FiddleTitle />
-		{#if updated}
+		{#if $fiddleUpdated}
 			<div class="h-4 leading-3 text-xs text-gray-500 dark:text-gray-400">
-				<span use:relativeTime={{ date: updated }} />
+				<span use:relativeTime={{ date: $fiddleUpdated }} />
 			</div>
 		{/if}
 	</div>
 
 	<ul class="flex items-center gap-2">
 		{#if showShareMessage}
-			<li class="text-xs text-gray-200 dark:text-gray-400" in:blur={{ duration: 100 }} out:blur={{ duration: 800 }}>
+			<li class="text-xs text-gray-600 dark:text-gray-400" in:blur={{ duration: 100 }} out:blur={{ duration: 800 }}>
 				URL copied to clipboard
 			</li>
 		{/if}

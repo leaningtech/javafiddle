@@ -2,7 +2,7 @@
 	import Menu from "./repl/Menu.svelte";
 	import Sidebar from "./repl/Sidebar.svelte";
 	import Editor from "./repl/Editor.svelte";
-	import { fiddleTitle, files } from "./repl/state";
+	import { fiddleTitle, fiddleUpdated, files } from "./repl/state";
 	import FileTabs from "./repl/FileTabs.svelte";
 	import { goto } from "$app/navigation";
 	import Loading from "./Loading.svelte";
@@ -11,7 +11,6 @@
 	import { compress } from "./compress-fiddle";
 	import { onMount } from "svelte";
 
-	export let updated: Date | undefined;
 	export let outputUrl: string;
 	let isSaved = true;
 
@@ -59,10 +58,10 @@
 	}
 
 	async function share() {
-		updated = new Date;
+		$fiddleUpdated = new Date;
 		const id = compress({
 			title: $fiddleTitle,
-			updated,
+			updated: $fiddleUpdated,
 			files: $files,
 		});
 		isSaved = true;
@@ -87,7 +86,7 @@
 <svelte:window on:message={onMessage} on:beforeunload={isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
-	<Menu {updated} on:share={share} on:run={run} />
+	<Menu on:share={share} on:run={run} />
 	<div class="flex items-stretch flex-1 overflow-hidden">
 		<Sidebar />
 		<div class="flex-1 overflow-hidden">

@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { files, fiddleTitle } from "$lib/repl/state";
+	import { files, fiddleTitle, fiddleUpdated } from "$lib/repl/state";
 
 	export let data;
 
-	$: files.set(data.fiddle.files);
-	$: if (data.fiddle) fiddleTitle.set(data.fiddle.title);
+	$: $files = data.fiddle.files;
+	$: $fiddleTitle = data.fiddle.title;
+	$: $fiddleUpdated = data.fiddle.updated;
 </script>
 
 <svelte:head>

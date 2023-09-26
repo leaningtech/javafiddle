@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { favouriteIndex, favourites, fiddleTitle, files } from "../state";
+	import { favouriteIndex, favourites, fiddleTitle, fiddleUpdated, files } from "../state";
 	import { onNavigate } from "$app/navigation";
 
 	$: isFavourite = $favouriteIndex !== -1;
@@ -13,7 +13,7 @@
 			$favourites = [
 				{
 					title: $fiddleTitle,
-					updated: new Date, // TODO: move updated from repl to state store
+					updated: $fiddleUpdated,
 					files: $files,
 				},
 				...$favourites,
@@ -30,7 +30,7 @@
 	$: if (isFavourite) {
 		$favourites[$favouriteIndex] = {
 			title: $fiddleTitle,
-			updated: new Date, // TODO: move updated from repl to state store
+			updated: $fiddleUpdated,
 			files: $files,
 		};
 	}
