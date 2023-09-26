@@ -7,7 +7,7 @@
 	$: $fiddleTitle = data.fiddle.title;
 	$: $fiddleUpdated = data.fiddle.updated;
 
-	const description = $files[0].content;
+	const description = data.isDefault ? "JavaFiddle is an online, browser-based Java IDE. Create and share Swing applications for free!" : data.fiddle.files[0].content;
 </script>
 
 <svelte:head>

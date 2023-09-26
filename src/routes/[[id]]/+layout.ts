@@ -1,6 +1,6 @@
 import { decompress, type Fiddle } from '$lib/compress-fiddle.js';
 
-export async function load({ params: { id } }): Promise<{ fiddle: Fiddle }> {
+export async function load({ params: { id } }): Promise<{ fiddle: Fiddle, isDefault: boolean }> {
 	if (!id) {
 		return {
 			fiddle: {
@@ -20,6 +20,7 @@ class Main {
 					},
 				],
 			},
+			isDefault: true,
 		};
 	}
 
@@ -27,5 +28,6 @@ class Main {
 
 	return {
 		fiddle,
+		isDefault: false,
 	};
 }
