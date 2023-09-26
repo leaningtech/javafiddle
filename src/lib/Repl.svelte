@@ -13,7 +13,6 @@
 
 	export let updated: Date | undefined;
 	export let outputUrl: string;
-	export let userFiddles: { id: string, title: string, updated: Date }[];
 	let isSaved = true;
 
 	let iframe: HTMLIFrameElement;
@@ -90,7 +89,7 @@
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
 	<Menu {updated} on:share={share} on:run={run} />
 	<div class="flex items-stretch flex-1 overflow-hidden">
-		<Sidebar {userFiddles} />
+		<Sidebar />
 		<div class="flex-1 overflow-hidden">
 			<SplitPane type="vertical" min="64px" max="-64px">
 				<section slot="a" class="h-1/2 flex flex-col">

@@ -31,7 +31,7 @@
 
 <svelte:window on:keydown={onkey} />
 
-<header class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none">
+<header class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none dark:border-b border-b-gray-700">
 	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
 		<h1>JavaFiddle</h1>
 	</a>

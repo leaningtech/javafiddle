@@ -3,33 +3,27 @@
 	import { isSidebarOpen } from "./state";
 	import { blur } from 'svelte/transition';
 	import { effectiveTheme } from "$lib/settings/store";
-	import FiddleList from "./FiddleList.svelte";
+	import SidebarOptions from "./sidebar/SidebarOptions.svelte";
 
 	import cheerpjDark from '$lib/assets/cheerpj/logotype-white.svg';
 	import cheerpjLight from '$lib/assets/cheerpj/logotype-grey.svg';
 	$: cheerpjLogotypeUrl = $effectiveTheme === "dark" ? cheerpjDark : cheerpjLight;
-
-	export let userFiddles: { id: string, title: string, updated: Date }[];
 </script>
 
 <aside class="w-10 bg-gray-100 dark:bg-gray-800 flex-shrink-0 transition-[width] flex flex-col overflow-hidden" class:!w-80={$isSidebarOpen}>
-	<div class="p-1.5 text-right shadow-none animate-shadow" class:shadow={$isSidebarOpen}>
-		<button class="w-6 h-6 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-500 rounded inline-flex items-center justify-center" on:click={() => $isSidebarOpen = !$isSidebarOpen}>
+	<div class="text-right shadow-none animate-shadow" class:shadow={$isSidebarOpen}>
+		<button class="w-10 h-10 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 inline-flex items-center justify-center" on:click={() => $isSidebarOpen = !$isSidebarOpen}>
 			{#if $isSidebarOpen}
-				<Icon icon="mi:close" />
+				<Icon icon="mi:close" class="w-4 h-4" />
 			{:else}
-				<Icon icon="mi:menu" />
+				<Icon icon="mi:menu" class="w-5 h-5" />
 			{/if}
 		</button>
 	</div>
 
 	<div class="w-80 grow overflow-hidden">
 		<div class="h-1/2 overflow-y-auto">
-			{#if $isSidebarOpen}
-				<div transition:blur={{ duration: 150 }}>
-					<FiddleList fiddles={userFiddles} />
-				</div>
-			{/if}
+			<SidebarOptions forceClose={!$isSidebarOpen} on:selectOption={() => $isSidebarOpen = true} />
 		</div>
 		{#if $isSidebarOpen}
 			<div class="h-1/2 overflow-y-auto flex flex-col" transition:blur={{ duration: 150 }}>
@@ -64,7 +58,7 @@
 						</a>
 					</div>
 				</div>
-				<a class="p-6 border-t-4 border-orange-500 bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300" href="https://labs.leaningtech.com/cheerpj">
+				<a class="p-6 border-t-4 border-orange-500 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-100" href="https://labs.leaningtech.com/cheerpj">
 					<img src={cheerpjLogotypeUrl} alt="CheerpJ" class="h-12 mb-4" />
 					<p class="text-sm leading-tight">
 						Run Java applications in the browser with CheerpJ. Supports applets, JNLP, Web Start, Oracle Forms, and more.
