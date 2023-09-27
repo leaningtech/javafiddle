@@ -13,7 +13,7 @@
 				Console
 
 				<button
-					class="ml-auto text-xs hover:underline"
+					class="ml-auto text-xs hover:underline text-gray-400 dark:text-gray-600"
 					on:click={() => console.innerText = ""}
 				>
 					Clear
@@ -32,7 +32,7 @@
 	</section>
 </div>
 
-<div class="absolute top-0 right-0 text-gray-500 dark:bg-gray-900 text-sm flex items-center select-none">
+<div class="absolute top-0 right-0 text-gray-500 text-sm flex items-center select-none">
 	{#if showLink}
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" target="_blank" rel="noreferrer" class="px-2 py-2" title="Open in new tab">
