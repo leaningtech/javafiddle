@@ -7,13 +7,13 @@
 </script>
 
 <div class="grid grid-cols-2 grow">
-	<section class="border-r border-gray-200 dark:border-gray-700">
-		<div class="p-3 h-full overflow-scroll bg-white text-gray-800 dark:bg-gray-950 dark:text-gray-100">
-			<div class="flex text-gray-500 text-sm select-none pb-3">
+	<section class="border-r border-stone-200 dark:border-stone-700">
+		<div class="p-3 h-full overflow-scroll text-stone-800  dark:text-stone-100">
+			<div class="flex text-stone-500 text-sm select-none pb-3">
 				Console
 
 				<button
-					class="ml-auto text-xs hover:underline text-gray-400 dark:text-gray-600"
+					class="ml-auto text-xs hover:underline text-stone-400 dark:text-stone-600"
 					on:click={() => console.innerText = ""}
 				>
 					Clear
@@ -25,14 +25,14 @@
 		</div>
 	</section>
 	<section class="flex flex-col">
-		<div class="p-3 text-gray-500 text-sm select-none">
+		<div class="p-3 text-stone-500 text-sm select-none">
 			Result
 		</div>
 		<div class="grow" bind:this={display}></div>
 	</section>
 </div>
 
-<div class="absolute top-0 right-0 text-gray-500 text-sm flex items-center select-none">
+<div class="absolute top-0 right-0 text-stone-500 text-sm flex items-center select-none">
 	{#if showLink}
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" target="_blank" rel="noreferrer" class="px-2 py-2" title="Open in new tab">

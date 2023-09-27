@@ -13,7 +13,7 @@
 		isOpen = true;
 		evt.stopPropagation();
 	}}
-	class="text-sm rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-3 h-8 flex items-center gap-1"
+	class="text-sm rounded bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 font-semibold px-3 h-8 flex items-center gap-1"
 >
 	<Icon icon="mi:filter" class="w-5 h-5" />
 	Settings

@@ -5,15 +5,15 @@
 	import { relativeTime } from "svelte-relative-time";
 </script>
 
-<p class="text-sm p-3 text-gray-500 dark:text-gray-400 leading-tight">
+<p class="text-sm p-3 text-stone-500 dark:text-stone-400 leading-tight">
 	Click the heart icon on a fiddle to have it appear in this list.
 </p>
 
-<ul class="text-gray-600 dark:text-gray-200 text-sm">
+<ul class="text-stone-600 dark:text-stone-200 text-sm">
 	{#each $favourites as fiddle, index}
 		<li>
 			<button
-				class="w-full text-left flex items-center px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-900"
+				class="w-full text-left flex items-center px-4 py-2 hover:bg-stone-200 dark:hover:bg-stone-900"
 				on:click={async () => {
 					const fiddle = $favourites[index];
 					const id = compress(fiddle);

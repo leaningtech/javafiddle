@@ -18,9 +18,9 @@
 </script>
 
 <button
-	class="group px-3 py-2 hover:text-gray-800 dark:hover:text-gray-400 cursor-pointer flex items-center justify-center"
-	class:!text-gray-600={isSelected}
-	class:dark:!text-gray-200={isSelected}
+	class="group px-3 py-2 hover:text-stone-800 dark:hover:text-stone-400 cursor-pointer flex items-center justify-center"
+	class:!text-stone-600={isSelected}
+	class:dark:!text-stone-200={isSelected}
 	on:click={() => selectedFilePath.set(file.path)}
 >
 	<button

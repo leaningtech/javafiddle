@@ -14,7 +14,7 @@
 	}
 </script>
 
-<div class="flex items-stretch text-gray-500 h-8">
+<div class="flex items-stretch text-stone-500 h-8">
 	{#each $files as file}
 		<FileTab {file} />
 	{/each}

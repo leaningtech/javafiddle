@@ -107,7 +107,7 @@
 
 					<Editor {compileLog} />
 				</section>
-				<section slot="b" class="border-t border-gray-200 dark:border-gray-700 overflow-hidden">
+				<section slot="b" class="border-t border-stone-200 dark:border-stone-700 overflow-hidden">
 					<div class="w-full h-full" class:hidden={!loading}>
 						<Loading />
 					</div>

@@ -30,7 +30,7 @@
 </script>
 
 {#if selectedOption}
-	<div class="border-y dark:border-gray-700">
+	<div class="border-y dark:border-stone-700">
 		<button
 			class="flex items-center gap-3 px-2.5 h-10 w-full font-medium"
 			on:click={() => selectedOptionIndex = -1}
@@ -45,9 +45,9 @@
 {:else}
 	<ul>
 		{#each options as option, index}
-			<li class="border-b first:border-t dark:border-gray-700">
+			<li class="border-b first:border-t dark:border-stone-700">
 				<button
-					class="group flex items-center gap-3 px-2.5 h-10 w-full text-gray-600 dark:text-gray-400"
+					class="group flex items-center gap-3 px-2.5 h-10 w-full text-stone-600 dark:text-stone-400"
 					class:hover:text-red-600={option.color === "red"}
 					class:dark:hover:text-red-400={option.color === "red"}
 					class:hover:text-teal-600={option.color === "teal"}

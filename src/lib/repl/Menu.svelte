@@ -31,7 +31,7 @@
 
 <svelte:window on:keydown={onkey} />
 
-<header class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none dark:border-b border-b-gray-700 dark:bg-gray-900">
+<header class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none dark:border-b border-b-stone-700 dark:bg-stone-800">
 	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
 		<h1>JavaFiddle</h1>
 	</a>
@@ -39,7 +39,7 @@
 	<div class="grow flex flex-col justify-center self-stretch">
 		<FiddleTitle />
 		{#if $fiddleUpdated}
-			<div class="h-4 leading-3 text-xs text-gray-500 dark:text-gray-400">
+			<div class="h-4 leading-3 text-xs text-stone-500 dark:text-stone-400">
 				<span use:relativeTime={{ date: $fiddleUpdated }} />
 			</div>
 		{/if}
@@ -47,14 +47,14 @@
 
 	<ul class="flex items-center gap-2">
 		{#if showShareMessage}
-			<li class="text-xs text-gray-600 dark:text-gray-400" in:blur={{ duration: 100 }} out:blur={{ duration: 800 }}>
+			<li class="text-xs text-stone-600 dark:text-stone-400" in:blur={{ duration: 100 }} out:blur={{ duration: 800 }}>
 				URL copied to clipboard
 			</li>
 		{/if}
 		<FavouriteButton />
 		{#if !$autoRun}
 			<li>
-				<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8">
+				<button on:click={() => dispatch("run", undefined)} class="text-sm flex items-center rounded bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 font-semibold px-2 py-1 h-8">
 					<Icon icon="mi:play" class="w-5 h-5 mr-1" />
 					Run
 				</button>
@@ -66,7 +66,7 @@
 					dispatch("share", undefined)
 					showShareMessage = true;
 				}}
-				class="text-sm flex items-center rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 font-semibold px-2 py-1 h-8"
+				class="text-sm flex items-center rounded bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 font-semibold px-2 py-1 h-8"
 				title="⌘S / Ctrl+S"
 			>
 				<Icon icon="mi:share" class="w-5 h-5 mr-1" />
