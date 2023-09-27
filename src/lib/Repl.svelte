@@ -101,7 +101,7 @@
 		<div class="flex-1 overflow-hidden">
 			<SplitPane type="vertical" min="64px" max="-64px">
 				<section slot="a" class="h-1/2 flex flex-col">
-					<div class="border-b border-gray-200 dark:border-gray-700 text-sm">
+					<div class="text-sm">
 						<FileTabs />
 					</div>
 

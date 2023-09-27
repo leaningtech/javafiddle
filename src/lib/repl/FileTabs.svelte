@@ -14,12 +14,12 @@
 	}
 </script>
 
-<div class="flex items-stretch text-gray-500 font-semibold h-10">
+<div class="flex items-stretch text-gray-500 h-8">
 	{#each $files as file}
 		<FileTab {file} />
 	{/each}
 	<button
-		class="mx-1 mb-1"
+		class="mx-1"
 		title="New file"
 		on:click={() => {
 			const path = getNewFilePath();
