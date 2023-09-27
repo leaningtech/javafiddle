@@ -17,9 +17,9 @@
 	let loading = true;
 
 	async function ready() {
-		if (window.top !== window && window.top) {
+		if (window.parent !== window && window.parent) {
 			// Tell parent frame we are ready to recieve files
-			window.top.postMessage({ action: "ready" }, window.location.origin);
+			window.parent.postMessage({ action: "ready" }, window.location.origin);
 		} else {
 			// Load files from load function 
 			files.set($files); // Force file write

@@ -12,6 +12,9 @@
 	import { onMount } from "svelte";
 
 	export let outputUrl: string;
+	export let enableSidebar: boolean = true;
+	export let enableMenu: boolean = true;
+
 	let isSaved = true;
 
 	let iframe: HTMLIFrameElement;
@@ -86,9 +89,13 @@
 <svelte:window on:message={onMessage} on:beforeunload={isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
-	<Menu on:share={share} on:run={run} />
+	{#if enableMenu}
+		<Menu on:share={share} on:run={run} />
+	{/if}
 	<div class="flex items-stretch flex-1 overflow-hidden">
-		<Sidebar />
+		{#if enableSidebar}
+			<Sidebar />
+		{/if}
 		<div class="flex-1 overflow-hidden">
 			<SplitPane type="vertical" min="64px" max="-64px">
 				<section slot="a" class="h-1/2 flex flex-col">

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { SplitPane } from "@rich_harris/svelte-split-pane";
 
 	export let console: HTMLPreElement;
 	export let display: HTMLElement;
