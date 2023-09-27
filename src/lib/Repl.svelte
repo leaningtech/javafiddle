@@ -81,8 +81,10 @@
 	}
 
 	function onBeforeUnload(evt: BeforeUnloadEvent) {
-		evt.preventDefault();
-		return (evt.returnValue = "");
+		if (window.parent === window) {
+			evt.preventDefault();
+			return (evt.returnValue = "");
+		}
 	}
 </script>
 
