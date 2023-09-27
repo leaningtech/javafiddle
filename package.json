@@ -1,6 +1,7 @@
 {
-	"name": "javafiddle2",
+	"name": "javafiddle",
 	"version": "0.0.1",
+	"license": "Apache-2.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
