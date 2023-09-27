@@ -1,13 +1,13 @@
 import { decompress, type Fiddle } from '$lib/compress-fiddle.js';
 
-export async function load({ params: { id } }): Promise<{ fiddle: Fiddle, isDefault: boolean }> {
+export async function load({ params: { id } }): Promise<{ fiddle: Fiddle; isDefault: boolean }> {
 	if (!id) {
 		return {
 			fiddle: {
-				title: "",
+				title: '',
 				files: [
 					{
-						path: "Main.java",
+						path: 'Main.java',
 						content: `package fiddle;
 
 class Main {
@@ -15,11 +15,11 @@ class Main {
         System.out.println("Hello, World!"); 
     }
 }
-`,
-					},
-				],
+`
+					}
+				]
 			},
-			isDefault: true,
+			isDefault: true
 		};
 	}
 
@@ -27,6 +27,6 @@ class Main {
 
 	return {
 		fiddle,
-		isDefault: false,
+		isDefault: false
 	};
 }

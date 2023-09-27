@@ -2,11 +2,11 @@
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {},
+		extend: {}
 	},
 	plugins: [],
-	darkMode: "class",
+	darkMode: 'class',
 	blocklist: [
-		"container", // conflicts with svelte-split-pane
+		'container' // conflicts with svelte-split-pane
 	]
-}
+};

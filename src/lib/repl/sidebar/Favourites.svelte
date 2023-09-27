@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
-	import { compress } from "$lib/compress-fiddle";
-	import { favourites, favouriteIndex } from "../state";
-	import { relativeTime } from "svelte-relative-time";
+	import { goto } from '$app/navigation';
+	import { compress } from '$lib/compress-fiddle';
+	import { favourites, favouriteIndex } from '../state';
+	import { relativeTime } from 'svelte-relative-time';
 </script>
 
 <p class="text-sm p-3 text-stone-500 dark:text-stone-400 leading-tight">
@@ -21,7 +21,7 @@
 					$favouriteIndex = index;
 				}}
 			>
-				<div class="grow">{fiddle.title || "Untitled"}</div>
+				<div class="grow">{fiddle.title || 'Untitled'}</div>
 				<div class="text-xs opacity-50" use:relativeTime={{ date: fiddle.updated }}>
 					{fiddle.updated.toLocaleString()}
 				</div>

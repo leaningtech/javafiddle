@@ -1,7 +1,7 @@
 import type { Session } from 'svelte-kit-cookie-session';
 
 type SessionData = {
-	userId?: number,
+	userId?: number;
 };
 
 // See https://kit.svelte.dev/docs/types#app

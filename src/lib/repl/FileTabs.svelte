@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { files, selectedFilePath } from "./state";
-	import FileTab from "./FileTab.svelte";
-	import Icon from "@iconify/svelte";
+	import { files, selectedFilePath } from './state';
+	import FileTab from './FileTab.svelte';
+	import Icon from '@iconify/svelte';
 
 	function getNewFilePath(): string {
 		let i = 2;
@@ -23,7 +23,7 @@
 		title="New file"
 		on:click={() => {
 			const path = getNewFilePath();
-			const className = path.replace(/\.java$/, "");
+			const className = path.replace(/\.java$/, '');
 			$files = [
 				...$files,
 				{
@@ -36,7 +36,7 @@ class ${className} {
     }
 }
 `
-				},
+				}
 			];
 			$selectedFilePath = path;
 		}}

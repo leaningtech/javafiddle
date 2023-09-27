@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { onMount, tick } from "svelte";
+	import { onMount, tick } from 'svelte';
 	import { basicSetup } from 'codemirror';
 	import { EditorView, keymap } from '@codemirror/view';
 	import { Compartment, EditorState } from '@codemirror/state';
 	import { indentWithTab } from '@codemirror/commands';
 	import { indentUnit } from '@codemirror/language';
-	import { lintGutter } from "@codemirror/lint";
+	import { lintGutter } from '@codemirror/lint';
 	import { java } from '@codemirror/lang-java';
-	import { files, selectedFilePath, type File } from "./state";
-	import "./codemirror.css";
-	import { compartment, diagnostic, parseCompileLog } from "./linter";
-	import { effectiveTheme } from "$lib/settings/store";
-	import { coolGlow, tomorrow } from "thememirror";
+	import { files, selectedFilePath, type File } from './state';
+	import './codemirror.css';
+	import { compartment, diagnostic, parseCompileLog } from './linter';
+	import { effectiveTheme } from '$lib/settings/store';
+	import { coolGlow, tomorrow } from 'thememirror';
 
 	let container: HTMLDivElement;
 	let editorStates: Map<string, EditorState> = new Map();
 	let editorView: EditorView | undefined;
-	const themeCompartment = new Compartment;
+	const themeCompartment = new Compartment();
 
-	$: theme = $effectiveTheme === "dark" ? coolGlow : tomorrow;
+	$: theme = $effectiveTheme === 'dark' ? coolGlow : tomorrow;
 
 	$: reset($files);
 
@@ -28,7 +28,7 @@
 		indentUnit.of('    '),
 		lintGutter(),
 		compartment.of(diagnostic.of([])),
-		themeCompartment.of(theme),
+		themeCompartment.of(theme)
 	];
 
 	// Resets states to files
@@ -46,16 +46,16 @@
 						changes: {
 							from: 0,
 							to: existing.length,
-							insert: file.content,
+							insert: file.content
 						}
 					});
 					state = transaction.state;
 				}
 			} else {
-				const extension = file.path.split(".").pop();
+				const extension = file.path.split('.').pop();
 				state = EditorState.create({
 					doc: file.content,
-					extensions: extension === "java" ? [...extensions(), java()] : extensions(),
+					extensions: extension === 'java' ? [...extensions(), java()] : extensions()
 				});
 			}
 
@@ -76,21 +76,23 @@
 
 				if (transaction.docChanged) {
 					skipReset = true;
-					files.update(files => files.map(file => {
-						if (file.path === $selectedFilePath) {
-							return {
-								...file,
-								content: transaction.state.doc.toString(),
+					files.update((files) =>
+						files.map((file) => {
+							if (file.path === $selectedFilePath) {
+								return {
+									...file,
+									content: transaction.state.doc.toString()
+								};
+							} else {
+								return file;
 							}
-						} else {
-							return file;
-						}
-					}));
+						})
+					);
 					await tick();
 					skipReset = false;
 				}
-			},
-		})
+			}
+		});
 		return () => {
 			editorView?.destroy();
 		};
@@ -121,7 +123,7 @@
 			const diagnosticsForFile = diagnostics[fileIndex];
 			const path = $files[fileIndex].path;
 			const tr = {
-				effects: compartment.reconfigure(diagnostic.of(diagnosticsForFile)),
+				effects: compartment.reconfigure(diagnostic.of(diagnosticsForFile))
 			};
 			if ($selectedFilePath === path) {
 				editorView?.dispatch(tr);
@@ -137,17 +139,15 @@
 
 	$: {
 		const tr = {
-			effects: themeCompartment.reconfigure(theme),
+			effects: themeCompartment.reconfigure(theme)
 		};
 
 		editorView?.dispatch(tr); // Current file
-		for (const [key, value] of editorStates.entries()) { // Other files
+		for (const [key, value] of editorStates.entries()) {
+			// Other files
 			editorStates.set(key, value.update(tr).state);
 		}
 	}
 </script>
 
-<div
-	bind:this={container}
-	class="grow overflow-hidden"
-/>
+<div bind:this={container} class="grow overflow-hidden" />

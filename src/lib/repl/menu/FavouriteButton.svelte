@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
-	import { favouriteIndex, favourites, fiddleTitle, fiddleUpdated, files } from "../state";
-	import { onNavigate } from "$app/navigation";
+	import Icon from '@iconify/svelte';
+	import { favouriteIndex, favourites, fiddleTitle, fiddleUpdated, files } from '../state';
+	import { onNavigate } from '$app/navigation';
 
 	$: isFavourite = $favouriteIndex !== -1;
 
@@ -14,9 +14,9 @@
 				{
 					title: $fiddleTitle,
 					updated: $fiddleUpdated,
-					files: $files,
+					files: $files
 				},
-				...$favourites,
+				...$favourites
 			];
 			$favouriteIndex = 0;
 		}
@@ -31,20 +31,13 @@
 		$favourites[$favouriteIndex] = {
 			title: $fiddleTitle,
 			updated: $fiddleUpdated,
-			files: $files,
+			files: $files
 		};
 	}
 </script>
 
-<button
-	on:click={toggle}
-	class:text-red-600={isFavourite}
-	class:dark:text-red-400={isFavourite}
->
-	<Icon
-		icon="mi:heart"
-		class="w-6 h-6"
-	/>
+<button on:click={toggle} class:text-red-600={isFavourite} class:dark:text-red-400={isFavourite}>
+	<Icon icon="mi:heart" class="w-6 h-6" />
 	<span class="sr-only">
 		{#if isFavourite}
 			Remove from favorites

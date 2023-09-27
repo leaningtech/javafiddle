@@ -1,15 +1,15 @@
 <script lang="ts">
-	import Menu from "./repl/Menu.svelte";
-	import Sidebar from "./repl/Sidebar.svelte";
-	import Editor from "./repl/Editor.svelte";
-	import { fiddleTitle, fiddleUpdated, files } from "./repl/state";
-	import FileTabs from "./repl/FileTabs.svelte";
-	import { goto } from "$app/navigation";
-	import Loading from "./Loading.svelte";
+	import Menu from './repl/Menu.svelte';
+	import Sidebar from './repl/Sidebar.svelte';
+	import Editor from './repl/Editor.svelte';
+	import { fiddleTitle, fiddleUpdated, files } from './repl/state';
+	import FileTabs from './repl/FileTabs.svelte';
+	import { goto } from '$app/navigation';
+	import Loading from './Loading.svelte';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
-	import { autoRun, theme } from "./settings/store";
-	import { compress } from "./compress-fiddle";
-	import { onMount } from "svelte";
+	import { autoRun, theme } from './settings/store';
+	import { compress } from './compress-fiddle';
+	import { onMount } from 'svelte';
 
 	export let outputUrl: string;
 	export let enableSidebar: boolean = true;
@@ -19,7 +19,7 @@
 
 	let iframe: HTMLIFrameElement;
 	let loading = false;
-	let compileLog = "";
+	let compileLog = '';
 
 	files.subscribe(() => {
 		isSaved = false;
@@ -35,9 +35,12 @@
 	function run() {
 		if (!loading) {
 			loading = true;
-			iframe?.contentWindow?.postMessage({
-				action: "reload",
-			}, window.location.origin);
+			iframe?.contentWindow?.postMessage(
+				{
+					action: 'reload'
+				},
+				window.location.origin
+			);
 		}
 	}
 
@@ -45,27 +48,30 @@
 		if (event.origin !== window.location.origin) return;
 
 		const { action } = event.data;
-		console.log("recv from iframe", event.data);
+		console.log('recv from iframe', event.data);
 
-		if (action === "ready") {
-			iframe?.contentWindow?.postMessage({
-				action: "run",
-				files: $files,
-			}, window.location.origin);
+		if (action === 'ready') {
+			iframe?.contentWindow?.postMessage(
+				{
+					action: 'run',
+					files: $files
+				},
+				window.location.origin
+			);
 			loading = false; // once files are sent, any changes to files will trigger a reload
-		} else if (action === "running") {
+		} else if (action === 'running') {
 			compileLog = event.data.compileLog;
-		} else if (action === "compile_error") {
+		} else if (action === 'compile_error') {
 			compileLog = event.data.compileLog;
 		}
 	}
 
 	async function share() {
-		$fiddleUpdated = new Date;
+		$fiddleUpdated = new Date();
 		const id = compress({
 			title: $fiddleTitle,
 			updated: $fiddleUpdated,
-			files: $files,
+			files: $files
 		});
 		isSaved = true;
 		await goto(`/${id}`, { replaceState: true });
@@ -75,15 +81,18 @@
 	// Notify iframe of theme changes so it can reload its theme from localStorage
 	$: {
 		$theme;
-		iframe?.contentWindow?.postMessage({
-			action: "theme_change",
-		}, window.location.origin);
+		iframe?.contentWindow?.postMessage(
+			{
+				action: 'theme_change'
+			},
+			window.location.origin
+		);
 	}
 
 	function onBeforeUnload(evt: BeforeUnloadEvent) {
 		if (window.parent === window) {
 			evt.preventDefault();
-			return (evt.returnValue = "");
+			return (evt.returnValue = '');
 		}
 	}
 </script>
@@ -111,7 +120,15 @@
 					<div class="w-full h-full" class:hidden={!loading}>
 						<Loading />
 					</div>
-					<iframe bind:this={iframe} src={outputUrl} class="w-full h-full" class:hidden={loading} title="Output" allowtransparency={true} frameborder={0} />
+					<iframe
+						bind:this={iframe}
+						src={outputUrl}
+						class="w-full h-full"
+						class:hidden={loading}
+						title="Output"
+						allowtransparency={true}
+						frameborder={0}
+					/>
 				</section>
 			</SplitPane>
 		</div>

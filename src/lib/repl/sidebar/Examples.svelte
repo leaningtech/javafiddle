@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
-	import Loading from "$lib/Loading.svelte";
-	import { compress, type Fiddle } from "$lib/compress-fiddle";
-	import { onMount } from "svelte";
+	import { goto } from '$app/navigation';
+	import Loading from '$lib/Loading.svelte';
+	import { compress, type Fiddle } from '$lib/compress-fiddle';
+	import { onMount } from 'svelte';
 
 	async function fetchExampleFile(path: string) {
 		const res = await fetch(`/examples/${path}`);
@@ -13,23 +13,23 @@
 	onMount(async () => {
 		examples = [
 			{
-				title: "Hello world",
+				title: 'Hello world',
 				files: [
 					{
-						path: "Main.java",
-						content: await fetchExampleFile("hello-world/Main.java"),
-					},
-				],
+						path: 'Main.java',
+						content: await fetchExampleFile('hello-world/Main.java')
+					}
+				]
 			},
 			{
-				title: "Hello world with Swing",
+				title: 'Hello world with Swing',
 				files: [
 					{
-						path: "Main.java",
-						content: await fetchExampleFile("hello-world-swing/Main.java"),
-					},
-				],
-			},
+						path: 'Main.java',
+						content: await fetchExampleFile('hello-world-swing/Main.java')
+					}
+				]
+			}
 		];
 	});
 </script>

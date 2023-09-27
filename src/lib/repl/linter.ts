@@ -1,21 +1,24 @@
-import { linter, type Diagnostic } from "@codemirror/lint";
-import { Compartment, Facet } from "@codemirror/state";
-import type { File } from "./state";
+import { linter, type Diagnostic } from '@codemirror/lint';
+import { Compartment, Facet } from '@codemirror/state';
+import type { File } from './state';
 
-const linterService = linter(view => {
-	return view.state.facet(diagnostic).flat();
-}, {
-	needsRefresh: update => update.startState.facet(diagnostic) !== update.state.facet(diagnostic),
-});
+const linterService = linter(
+	(view) => {
+		return view.state.facet(diagnostic).flat();
+	},
+	{
+		needsRefresh: (update) => update.startState.facet(diagnostic) !== update.state.facet(diagnostic)
+	}
+);
 
 export const diagnostic = Facet.define<Diagnostic[]>({
-	enables: linterService,
+	enables: linterService
 });
 
-export const compartment = new Compartment;
+export const compartment = new Compartment();
 
 export function parseCompileLog(log: string, files: File[]): Diagnostic[][] {
-	const logLines = log.split("\n");
+	const logLines = log.split('\n');
 	const diagnostics: Diagnostic[][] = [];
 	const re = /^\/str\/([^:]+):(\d+): ([^:]+): ([^:]+)$/;
 
@@ -31,14 +34,14 @@ export function parseCompileLog(log: string, files: File[]): Diagnostic[][] {
 		if (!groups) continue;
 		const [, path, lineNoStr, severity, message] = groups;
 		const fileIndex = filePathToIndex.get(path);
-		if (typeof fileIndex !== "number") continue;
+		if (typeof fileIndex !== 'number') continue;
 		const lineNo = parseInt(lineNoStr);
 
 		// Find index that the line starts in the source file
 		const sourceFile = files[fileIndex];
 		let pos = 0;
 		for (let linesLeft = lineNo; linesLeft > 1 && pos < sourceFile.content.length; pos++) {
-			if (sourceFile.content[pos] === "\n") linesLeft--;
+			if (sourceFile.content[pos] === '\n') linesLeft--;
 		}
 
 		// Column; position of "^"
@@ -47,8 +50,8 @@ export function parseCompileLog(log: string, files: File[]): Diagnostic[][] {
 		diagnostics[fileIndex].push({
 			from: pos,
 			to: pos + 1,
-			severity: severity === "error" ? "error" : "warning",
-			message,
+			severity: severity === 'error' ? 'error' : 'warning',
+			message
 		});
 	}
 	return diagnostics;

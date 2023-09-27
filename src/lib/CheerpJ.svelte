@@ -13,9 +13,9 @@
 	onMount(() => {
 		promise = fetch(`${PUBLIC_CHEERPJ_ORIGIN}/LATEST.txt`)
 			.then((res) => res.text())
-			.then(text => text.trim())
-			.catch(err => {
-				console.error("Error loading CheerpJ", err);
+			.then((text) => text.trim())
+			.catch((err) => {
+				console.error('Error loading CheerpJ', err);
 				error = true;
 			});
 	});
@@ -28,10 +28,10 @@
 		}
 
 		await cheerpjInit({
-			status: "none",
+			status: 'none'
 		});
 		cheerpjCreateDisplay(-1, -1, display);
-		dispatch("ready");
+		dispatch('ready');
 	}
 </script>
 
