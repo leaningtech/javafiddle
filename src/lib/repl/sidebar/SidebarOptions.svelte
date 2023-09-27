@@ -3,6 +3,7 @@
 	import { createEventDispatcher } from "svelte";
 	import Favourites from "./Favourites.svelte";
 	import { browser } from "$app/environment";
+	import Examples from "./Examples.svelte";
 
 	const dispatch = createEventDispatcher<{ selectOption: number }>();
 
@@ -41,6 +42,8 @@
 	</div>
 	{#if selectedOptionIndex === 0}
 		<Favourites />
+	{:else if selectedOptionIndex === 1}
+		<Examples />
 	{/if}
 {:else}
 	<ul>

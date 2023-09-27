@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="w-80 grow overflow-hidden">
-		<div class="h-1/2 overflow-y-auto">
+		<div class="h-1/2 overflow-y-auto flex flex-col">
 			<SidebarOptions forceClose={!$isSidebarOpen} on:selectOption={() => $isSidebarOpen = true} />
 		</div>
 		{#if $isSidebarOpen}
