@@ -3,6 +3,7 @@
 	import { files, selectedFilePath, type File } from "./state";
 
 	export let file: File;
+	export let canEdit: boolean;
 
 	let isEditing = false;
 
@@ -46,23 +47,25 @@
 			}
 		}}
 		class="focus:text-orange-600 ring-0"
-		class:pointer-events-none={!isSelected || file.path === "Main.java"}
+		class:pointer-events-none={!isSelected || !canEdit}
 		class:cursor-text={isSelected}
 		contenteditable
 		bind:innerText={path}
 	/>
-	<button
-		on:click={() => {
-			if (!confirm(`Are you sure you want to delete '${path}'?`)) {
-				return;
-			}
-			files.update($files => $files.filter(f => f.path !== file.path));
-			$selectedFilePath = $files[0].path;
-		}}
-		class="ml-1 -mr-3 opacity-0 group-hover:opacity-50"
-		class:!opacity-0={!isSelected}
-		class:pointer-events-none={!isSelected}
-	>
-		<Icon icon="mi:close" class="w-3 h-3" />
-	</button>
+	{#if canEdit}
+		<button
+			on:click={() => {
+				if (!confirm(`Are you sure you want to delete '${path}'?`)) {
+					return;
+				}
+				files.update($files => $files.filter(f => f.path !== file.path));
+				$selectedFilePath = $files[0].path;
+			}}
+			class="ml-1 -mr-3 opacity-0 group-hover:opacity-50"
+			class:!opacity-0={!isSelected}
+			class:pointer-events-none={!isSelected}
+		>
+			<Icon icon="mi:close" class="w-3 h-3" />
+		</button>
+	{/if}
 </button>

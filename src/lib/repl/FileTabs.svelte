@@ -15,8 +15,8 @@
 </script>
 
 <div class="flex items-stretch text-stone-500 h-8">
-	{#each $files as file}
-		<FileTab {file} />
+	{#each $files as file, i}
+		<FileTab {file} canEdit={i > 0} />
 	{/each}
 	<button
 		class="mx-1"
