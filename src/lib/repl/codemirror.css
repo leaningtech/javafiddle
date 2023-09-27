@@ -15,6 +15,6 @@
 	background-color: rgb(3 7 18 / 1); /* bg-gray-950 */
 }
 
-.dark .cm-gutters {
-	border-right: 1px solid rgb(55 65 81 / 1);
+.cm-gutters {
+	border-right: 0 !important;
 }
