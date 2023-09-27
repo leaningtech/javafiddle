@@ -28,7 +28,7 @@ export const selectedFilePath = writable<string>("Main.java");
 export const isSidebarOpen = persist(writable(true), createLocalStorage(), "isSidebarOpen");
 
 export const fiddleTitle = writable<string>("");
-export const fiddleUpdated = writable<Date>(new Date);
+export const fiddleUpdated = writable<Date | undefined>();
 
 export const favourites = persist(writable<Fiddle[]>([]), createIndexedDBStorage(), "favourites")
 

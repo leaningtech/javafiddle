@@ -5,7 +5,6 @@ export async function load({ params: { id } }): Promise<{ fiddle: Fiddle, isDefa
 		return {
 			fiddle: {
 				title: "",
-				updated: new Date,
 				files: [
 					{
 						path: "Main.java",

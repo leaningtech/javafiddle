@@ -7,7 +7,7 @@ const fiddle = z.object({
 		content: z.string(),
 	})),
 	title: z.string(),
-	updated: z.coerce.date(),
+	updated: z.coerce.date().optional(),
 });
 
 export type Fiddle = z.infer<typeof fiddle>;
