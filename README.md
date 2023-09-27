@@ -4,7 +4,7 @@
 
 JavaFiddle is an online tool to build and share snippets of Java code, powered by [CheerpJ](https://labs.leaningtech.com/cheerpj).
 
-[![Screenshot of website](.github/screenshot.png)](https://javafiddle.leaningtech.coml)
+[![Screenshot of website](.github/screenshot.png)](https://javafiddle.leaningtech.com)
 
 ## Developing
 
