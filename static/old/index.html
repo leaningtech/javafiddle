@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta property="og:image" content="https://javafiddle.leaningtech.com/utils/assets/reddit.png?8/>
+  <meta property="og:image:width" content="140"/>
+  <meta property="og:image:height" content="100"/>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0">
+    <title>CheerpJ - JavaFiddle</title>
+
+
+    <meta name="description" property="og:description" content="A Java Fiddle running on the browser. Powered by CheerpJ by Leaning Technologies.">
+    <meta property="og:title" content="Browser-based Java Fiddle powered by CheerpJ"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://javafiddle.leaningtech.com"/>
+    <meta property="og:image" content="https://javafiddle.leaningtech.com/utils/assets/social.png?1"/>
+    <meta property="og:image:width" content="1528"/>
+    <meta property="og:image:height" content="800"/>
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@leaningtech"/>
+    <meta name="twitter:title" content="Browser-based Java Fiddle powered by CheerpJ."/>
+    <meta name="twitter:description" content="A Java Fiddle running on the browser. Powered by CheerpJ by Leaning Technologies."/>
+    <meta name="twitter:image" content="https://javafiddle.leaningtech.com/utils/assets/social.png?1"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700" type="text/css">
+    <link rel='stylesheet' id='us-fonts-css'  href='https://fonts.googleapis.com/css?family=Montserrat%3A300%2C400%2C500%2C600%2C700&#038;display=swap&#038;ver=6.0.2' media='all' />
+
+    <link rel="stylesheet" type="text/css" href="utils/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="utils/flexbox.css">
+    <link rel="stylesheet" type="text/css" href="utils/fiddle.css">
+  </head>
+<pre style="display:none;" id="sample_HW">
+  public class JavaFiddle
+  {
+    public static void main(String[] args)
+    {
+      System.out.println("HelloWorld!");
+    }
+  }
+</pre>
+<pre style="display:none;" id="sample_SWING">
+  import java.awt.Font;
+  import javax.swing.JFrame;
+  import javax.swing.JLabel;
+  import javax.swing.SwingUtilities;
+
+  public class JavaFiddle implements Runnable
+  {
+    private String text;
+    public JavaFiddle(String t)
+    {
+      text = t;
+    }
+    public void run()
+    {
+      JFrame f = new JFrame("Swing Sample");
+      JLabel l = new JLabel(text);
+      l.setFont(new Font("Serif", Font.PLAIN, 42));
+      f.add(l);
+      f.pack();
+      f.setLocationRelativeTo(null);
+      f.setVisible(true);
+    }
+    public static void main(String[] args)
+    {
+      SwingUtilities.invokeLater(new JavaFiddle("HelloWorld!"));
+    }
+  }
+</pre>
+
+    <body style="margin:0;height:100%; display:flex; flex-direction: column; justify-content: space-between; height: 100%;">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-818T3Y0PEY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-818T3Y0PEY');
+    </script>
+    
+      <div class="vertical layout covering">
+          <div class="header horizontal layout">
+            <div class="flex" style="padding-top: 0.7em;font-size: 0.3em; font-weight: 200;vertical-align:center;">
+              <div style="margin-right: 20px; margin-left: 20px; height: 100%; display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-family: montserrat; font-weight: 500; font-size: xxx-large;">JavaFiddle</span>
+                <a href="https://leaningtech.com/announcing-cheerpj-3-0-a-jvm-replacement-in-html5-and-webassembly-to-run-java-applications-and-applets-on-modern-browsers" style="text-decoration: none; height: 100%;" target="_blank">
+                  <div style="color: white; font-family: montserrat; font-weight: 400; font-size: large; height: 100%; display: flex; align-items: center;">
+                    <span>Powered by </span>
+                    <img src="utils/assets/cheerpj-logo.png" height="40px" style="margin-left: 2px;">
+                  </div>
+                </a>
+                <a href="https://discord.gg/cG9uFCPyzr" style="text-decoration: none; height: 100%;" target="_blank">
+                  <div style="color: white; font-family: montserrat; font-weight: 400; font-size: large; height: 100%; display: flex; align-items: center;">
+                    <span>Join us on </span>
+                    <img src="utils/assets/discord-logo-blue.svg" height="40px" style="margin-left: 7px;">
+                  </div>
+                </a>
+                <a href="https://leaningtech.com" style="text-decoration: none; height: 100%;" target="_blank">
+                  <div style="color: white; font-family: montserrat; font-weight: 400; font-size: large; height: 100%; display: flex; align-items: center;">
+                    <span>Made with &#10084;&#65039; by </span>
+                    <img src="utils/assets/leaningtech.png" height="40px" style="margin-left: 5px;">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="flex horizontal layout" style="margin-top:15px;">
+
+              <div class="flex vertical layout" style="position:relative;">
+
+              <div id="input" class="flex"></div>
+              <div style="position:absolute;right:0px;z-index:2;">
+                <select onchange="example(this)" style="padding: 10px; border: none; background: #ccc; color:black">
+                  <option value="0">Choose an example...</option>
+                  <option value="HW">Hello World</option>
+                  <option value="SWING">SWING example</option>
+                </select>
+              </div>
+
+  <div class="horizontal layout"><button id="compileButton" class="flex" style="--button-color-enabled: #ff7c00; --button-color-disabled: #ccc" onclick="compileJavaCode()" disabled="true">&#9654; RUN</input></div>
+
+
+              </div>
+              <div class="vertical layout">
+                  <div id="display" style="width: 640px; height: 480px;"></div>
+                  <div id="console-div" class="flex console">
+                    <pre id="console" style="width: 100%; height: 100%;"> &gt; Java output console</pre>
+                  </div>
+              </div>
+
+          </div>
+
+      </div>
+
+
+
+
+  </body>
+  <script type="text/javascript" src="utils/fiddle.js"></script>
+  <script>
+  setupAceEdit(/*version*/"java", /*theme*/"monokai")
+
+	var currentId = 0;
+	function cheerpjReady()
+	{
+		var d = document.getElementById("cheerpjDisplay");
+		d.classList.remove("loading");
+		var cb = document.getElementById("compileButton");
+		cb.disabled = false;
+	}
+	function compileJavaCode()
+	{
+		var cb = document.getElementById("compileButton");
+		cb.disabled = true;
+		var console = document.getElementById("console");
+		console.textContent = "> Compiling...\r\n\r\n";
+		var newCode = editor.getValue();
+		var packageName = "javafiddle" + (currentId++).toString();
+		newCode = "package " + packageName + ";\n" + newCode;
+		cheerpjAddStringFile("/str/JavaFiddle.java", newCode);
+		cheerpjRunMain("com.sun.tools.javac.Main", "/app/tools.jar:/files/", "/str/JavaFiddle.java","-d","/files/").then(
+			function(r)
+			{
+				var cb = document.getElementById("compileButton");
+				cb.disabled = false;
+				// Non-zero exit code means that an error has happened
+				if(r==0)
+				{
+					console.textContent = "> Running...\r\n\r\n";
+					cheerpjRunMain(packageName+".JavaFiddle", "/app/tools.jar:/files/");
+				}
+			}
+		);
+	}
+	function loadCheerpJ(url, readyFunc)
+	{
+		var script = document.createElement("script");
+		script.onload = readyFunc;
+		script.onerror = function(e)
+		{
+			// Try again
+			script.parentNode.removeChild(script);
+			loadCheerpJ();
+		}
+		script.src = url;
+		document.head.appendChild(script);
+	}
+	async function loadLatest()
+	{
+		var r = await fetch("https://cjrtnc.leaningtech.com/LATEST.txt");
+		var url = await r.text();
+		url = url.trim();
+		loadCheerpJ(url, async function()
+		{
+			await cheerpjInit({version:8});
+			cheerpjCreateDisplay(640,480,document.getElementById("display"));
+			cheerpjReady();
+		});
+	}
+	loadLatest();
+    </script>
+</html>
+

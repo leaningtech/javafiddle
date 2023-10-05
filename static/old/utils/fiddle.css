@@ -1,0 +1,60 @@
+html,body
+{
+	height: 100%;
+	margin: 0;
+	font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+
+div.header
+{
+	height: 55px;
+	font-size: 2.8em; font-weight:200; margin:0.1em;
+}
+.title
+{
+	text-align: right;
+	padding: 0.3em;
+	font-weight: 200;
+
+}
+#compileButton{
+
+	z-index:100;
+	font-weight: 200;
+	font-size: 1em;
+	background-color: var(--button-color-enabled, #ff7c00);
+  color:white;
+
+	height: 50px;
+
+	margin-left: 42px;
+	border: none;
+
+
+}
+
+#compileButton:disabled{
+
+	background-color: var(--button-color-disabled, #ccc)
+  color:white;
+
+
+}
+
+
+body{
+	background-color: #2F3129;
+	color: white;
+}
+
+#console {
+	padding:0.5em;
+	background-color: var(--background-color,#272822);
+	margin: 0;
+}
+
+pre#console {
+	overflow-y: scroll;
+	overflow-x: scroll;
+}
+
