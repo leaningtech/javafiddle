@@ -52,7 +52,7 @@
 						<li>Supports all of Java SE 8, including Swing.</li>
 					</ul>
 
-					<div class="mt-6 flex items-center justify-center gap-2">
+					<div class="my-6 flex items-center justify-center gap-2">
 						<a
 							class="rounded bg-[#5865F2] text-white font-semibold px-3 py-2 inline-flex items-center justify-center gap-2"
 							href="https://discord.gg/qBMHpK9Kqve"
@@ -69,6 +69,11 @@
 							View source
 						</a>
 					</div>
+
+					<p>
+						Looking for the <b>old version</b> of JavaFiddle?
+						<a href="/old/index.html" class="text-orange-500 underline">It's still available here</a>.
+					</p>
 				</div>
 				<a
 					class="p-6 border-t-4 border-orange-500 bg-stone-300 dark:bg-stone-600 text-stone-800 dark:text-stone-100"
