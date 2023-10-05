@@ -11,8 +11,8 @@ function setupAceEdit(version, theme)
 // Code Sharing
 var lzstring = document.createElement('script');
 lzstring.type = 'text/javascript';
-lzstring.src = '/utils/lz-string-1.4.4/libs/lz-string.js';
-lzstring.src = '/utils/lz-string/lz-string.min.js';
+lzstring.src = '/old/utils/lz-string-1.4.4/libs/lz-string.js';
+lzstring.src = '/old/utils/lz-string/lz-string.min.js';
 document.head.appendChild(lzstring);
 
 lzstring.addEventListener("load", () => {
