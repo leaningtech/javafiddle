@@ -28,7 +28,8 @@
 		}
 
 		await cheerpjInit({
-			status: 'none'
+			status: 'none',
+			javaProperties: ['java.library.path=/app/cheerpj-natives/natives']
 		});
 		cheerpjCreateDisplay(-1, -1, display);
 		dispatch('ready');

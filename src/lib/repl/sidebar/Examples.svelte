@@ -22,14 +22,23 @@
 				]
 			},
 			{
-				title: 'Hello world with Swing',
+				title: 'GUI with Swing',
 				files: [
 					{
 						path: 'Main.java',
 						content: await fetchExampleFile('hello-world-swing/Main.java')
 					}
 				]
-			}
+			},
+			/*{
+				title: '3D with LWJGL',
+				files: [
+					{
+						path: 'Main.java',
+						content: await fetchExampleFile('lwjgl/Main.java')
+					}
+				]
+			},*/
 		];
 	});
 </script>

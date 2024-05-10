@@ -3,6 +3,7 @@
 
 	export let console: HTMLPreElement;
 	export let display: HTMLElement;
+	export let lwjglCanvas: HTMLCanvasElement;
 	export let showLink: boolean;
 </script>
 
@@ -26,7 +27,10 @@
 	</section>
 	<section class="flex flex-col">
 		<div class="p-3 text-stone-500 text-sm select-none">Result</div>
-		<div class="grow" bind:this={display} />
+		<div class="grow relative" bind:this={display}>
+			<canvas bind:this={lwjglCanvas} class="absolute inset-0 w-full h-full" />
+			<!-- #cheerpjDisplay will be inserted here -->
+		</div>
 	</section>
 </div>
 

@@ -18,6 +18,10 @@ declare global {
 		}
 		// interface Platform {}
 	}
+
+	interface Window {
+		lwjglCanvasElement: HTMLCanvasElement;
+	}
 }
 
 export {};

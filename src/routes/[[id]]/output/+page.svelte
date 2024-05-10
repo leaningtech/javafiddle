@@ -45,6 +45,9 @@
 
 	let consoleEl: HTMLPreElement;
 	let display: HTMLElement;
+	let lwjglCanvas: HTMLCanvasElement;
+
+	$: if (lwjglCanvas) window.lwjglCanvasElement = lwjglCanvas;
 
 	async function compileAndRun() {
 		if (!browser) return;
@@ -53,10 +56,12 @@
 
 		consoleEl.innerHTML = '';
 
+		const classPath = '/app/tools.jar:/app/lwjgl-2.9.0.jar:/app/lwjgl_util-2.9.0.jar:/files/';
+
 		const sourceFiles = $files.map((file) => '/str/' + file.path);
 		const code = await cheerpjRunMain(
 			'com.sun.tools.javac.Main',
-			'/app/tools.jar:/files/',
+			classPath,
 			...sourceFiles,
 			'-d',
 			'/files/',
@@ -70,7 +75,7 @@
 		}
 
 		consoleEl.innerHTML = '';
-		cheerpjRunMain(deriveMainClass($files[0]), '/app/tools.jar:/files/');
+		cheerpjRunMain(deriveMainClass($files[0]), classPath);
 		loading = false;
 		window.top?.postMessage({ action: 'running', compileLog }, window.location.origin);
 	}
@@ -94,7 +99,7 @@
 </div>
 
 <div class="flex flex-col w-screen h-screen overflow-hidden" class:hidden={loading}>
-	<Output bind:console={consoleEl} bind:display showLink={!isTop && isShared} />
+	<Output bind:console={consoleEl} bind:display bind:lwjglCanvas showLink={!isTop && isShared} />
 </div>
 
 <CheerpJ on:ready={ready} {display} />
