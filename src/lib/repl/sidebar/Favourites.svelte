@@ -22,9 +22,11 @@
 				}}
 			>
 				<div class="grow">{fiddle.title || 'Untitled'}</div>
-				<div class="text-xs opacity-50" use:relativeTime={{ date: fiddle.updated }}>
-					{fiddle.updated.toLocaleString()}
-				</div>
+				{#if fiddle.updated}
+					<div class="text-xs opacity-50" use:relativeTime={{ date: fiddle.updated }}>
+						{fiddle.updated.toLocaleString()}
+					</div>
+				{/if}
 			</button>
 		</li>
 	{/each}
