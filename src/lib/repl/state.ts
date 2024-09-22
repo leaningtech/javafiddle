@@ -17,8 +17,9 @@ export const files = writable<File[]>([]);
 files.subscribe(($files) => {
 	if ('cheerpjAddStringFile' in globalThis) {
 		try {
+			const encoder = new TextEncoder();
 			for (const file of $files) {
-				cheerpjAddStringFile('/str/' + file.path, file.content);
+				cheerpjAddStringFile('/str/' + file.path, encoder.encode(file.content));
 			}
 			console.info('wrote files');
 		} catch (error) {
