@@ -6,6 +6,7 @@
 	import Loading from '$lib/Loading.svelte';
 	import { theme } from '$lib/settings/store';
 	import { onMount } from 'svelte';
+	import { tryPlausible } from '$lib/plausible';
 
 	let isTop = false;
 	let isShared = false;
@@ -53,6 +54,9 @@
 		if (!browser) return;
 
 		console.info('compileAndRun');
+
+		// custom event tracking for analytics
+		tryPlausible('Compile');
 
 		consoleEl.innerHTML = '';
 

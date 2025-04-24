@@ -10,6 +10,7 @@
 	import { autoRun, theme } from './settings/store';
 	import { compress } from './compress-fiddle';
 	import { onMount } from 'svelte';
+	import { tryPlausible } from './plausible';
 
 	export let outputUrl: string;
 	export let enableSidebar: boolean = true;
@@ -67,6 +68,10 @@
 	}
 
 	async function share() {
+
+		// custom event tracking for analytics
+		tryPlausible('Share');
+
 		$fiddleUpdated = new Date();
 		const id = compress({
 			title: $fiddleTitle,
