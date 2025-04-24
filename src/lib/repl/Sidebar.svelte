@@ -69,11 +69,6 @@
 							View source
 						</a>
 					</div>
-
-					<p>
-						Looking for the <b>old version</b> of JavaFiddle?
-						<a href="/old/index.html" class="text-orange-500 underline">It's still available here</a>.
-					</p>
 				</div>
 				<a
 					class="p-6 border-t-4 border-orange-500 bg-stone-300 dark:bg-stone-600 text-stone-800 dark:text-stone-100"
