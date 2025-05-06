@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { favouriteIndex, favourites, fiddleTitle, fiddleUpdated, files } from '../state';
-	import { onNavigate } from '$app/navigation';
 
 	$: isFavourite = $favouriteIndex !== -1;
 
@@ -21,10 +20,6 @@
 			$favouriteIndex = 0;
 		}
 	}
-
-	onNavigate(() => {
-		$favouriteIndex = -1;
-	});
 
 	// Keep favourites consistent with fiddle data
 	$: if (isFavourite) {

@@ -7,11 +7,12 @@
 	import { indentUnit } from '@codemirror/language';
 	import { lintGutter } from '@codemirror/lint';
 	import { java } from '@codemirror/lang-java';
-	import { files, selectedFilePath, type File } from './state';
+	import { files, fiddleTitle, fiddleUpdated, selectedFilePath, type File } from './state';
 	import './codemirror.css';
 	import { compartment, diagnostic, parseCompileLog } from './linter';
 	import { effectiveTheme } from '$lib/settings/store';
 	import { coolGlow, tomorrow } from 'thememirror';
+	import { compress } from '../compress-fiddle';
 
 	let container: HTMLDivElement;
 	let editorStates: Map<string, EditorState> = new Map();
@@ -66,6 +67,18 @@
 		}
 	}
 
+	function updateFragmentURL() {
+		$fiddleUpdated = new Date();
+		const fiddleFragmentURL = compress({
+			title: $fiddleTitle,
+			updated: $fiddleUpdated,
+			files: $files
+		});
+		// do not use goto since it removes the focus on the editor
+		// also use replace so history is not updated for every change
+		window.history.replaceState(null, '', `#${fiddleFragmentURL}`);
+	}
+
 	onMount(() => {
 		editorView = new EditorView({
 			parent: container,
@@ -90,6 +103,7 @@
 					);
 					await tick();
 					skipReset = false;
+					updateFragmentURL();
 				}
 			}
 		});

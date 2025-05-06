@@ -21,3 +21,20 @@ export function compress(data: Fiddle): string {
 export function decompress(str: string): Fiddle {
 	return fiddle.parse(JSON.parse(lz.decompressFromEncodedURIComponent(str)));
 }
+
+export const defaultFiddle: Fiddle = {
+	title: '',
+	files: [
+		{
+			path: 'Main.java',
+			content: `package fiddle;
+
+class Main {
+	public static void main(String[] args) {
+		System.out.println("Hello, World!"); 
+	}
+}
+`
+		}
+	]
+};

@@ -7,7 +7,10 @@
 	import { autoRun } from '$lib/settings/store';
 	import { blur } from 'svelte/transition';
 	import FavouriteButton from './menu/FavouriteButton.svelte';
-	import { fiddleUpdated } from './state';
+	import { files, fiddleTitle, fiddleUpdated, favouriteIndex } from './state';
+	import { defaultFiddle } from '$lib/compress-fiddle';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores'
 
 	const dispatch = createEventDispatcher<{ share: undefined; run: undefined }>();
 
@@ -27,6 +30,17 @@
 			dispatch('share', undefined);
 		}
 	}
+
+	function createNewFile() {
+		$files = defaultFiddle.files;
+		$fiddleTitle = defaultFiddle.title;
+		$fiddleUpdated = defaultFiddle.updated;
+		if ($favouriteIndex !== -1) {
+			$favouriteIndex = -1;
+		}
+		// clear URL
+		goto($page.url.pathname);
+	}
 </script>
 
 <svelte:window on:keydown={onkey} />
@@ -34,9 +48,9 @@
 <header
 	class="px-4 h-16 flex items-center justify-between gap-4 relative shadow dark:shadow-none dark:border-b border-b-stone-700 dark:bg-stone-800"
 >
-	<a href="/" class="text-xl text-orange-500 dark:text-orange-400 font-bold">
+	<button class="text-xl text-orange-500 dark:text-orange-400 font-bold" on:click={createNewFile}>
 		<h1>JavaFiddle</h1>
-	</a>
+	</button>
 
 	<div class="grow flex flex-col justify-center self-stretch">
 		<FiddleTitle />

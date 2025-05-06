@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { fiddleTitle } from '../state';
+	import { fiddleTitle, fiddleUpdated, files } from '../state';
+	import { goto } from '$app/navigation';
+	import { compress } from '$lib/compress-fiddle';
 
 	let isEditing = false;
 
@@ -15,7 +17,18 @@
 		bind:value={$fiddleTitle}
 		on:blur={() => (isEditing = false)}
 		on:keydown={(evt) => {
-			if (evt.key === 'Enter') isEditing = false;
+			if (evt.key === 'Enter') {
+				isEditing = false;
+				// since title changed, update URL
+				const fiddleFragmentURL = compress({
+					title: $fiddleTitle,
+					updated: $fiddleUpdated,
+					files: $files
+				});
+				goto(`/#${fiddleFragmentURL}`, {
+					replaceState: true
+				});
+			};
 		}}
 		class="text-lg block focus:outline-0 bg-inherit"
 		autocomplete="off"
