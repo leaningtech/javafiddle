@@ -2,13 +2,11 @@
 	import Menu from './repl/Menu.svelte';
 	import Sidebar from './repl/Sidebar.svelte';
 	import Editor from './repl/Editor.svelte';
-	import { fiddleTitle, fiddleUpdated, files } from './repl/state';
+	import { files } from './repl/state';
 	import FileTabs from './repl/FileTabs.svelte';
-	import { goto } from '$app/navigation';
 	import Loading from './Loading.svelte';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { autoRun, theme } from './settings/store';
-	import { compress } from './compress-fiddle';
 	import { onMount } from 'svelte';
 	import { tryPlausible } from './plausible';
 
@@ -72,14 +70,7 @@
 		// custom event tracking for analytics
 		tryPlausible('Share');
 
-		$fiddleUpdated = new Date();
-		const id = compress({
-			title: $fiddleTitle,
-			updated: $fiddleUpdated,
-			files: $files
-		});
 		isSaved = true;
-		await goto(`/${id}`, { replaceState: true });
 		await navigator.clipboard.writeText(window.location.toString());
 	}
 

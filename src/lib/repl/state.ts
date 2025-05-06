@@ -39,3 +39,5 @@ export const favourites = persist(writable<Fiddle[]>([]), createIndexedDBStorage
 
 // If loaded from favourites, this is the index of this fiddle in favourites
 export const favouriteIndex = writable<number>(-1);
+
+export const description = writable<string>('JavaFiddle is an online, browser-based Java IDE. Create and share Swing applications for free!');
