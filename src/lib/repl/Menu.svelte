@@ -24,7 +24,6 @@
 	}
 
 	function onkey(e: KeyboardEvent) {
-		console.log(e.ctrlKey, e.metaKey);
 		if ((e.ctrlKey || e.metaKey) && e.key === 's') {
 			e.preventDefault();
 			dispatch('share', undefined);
