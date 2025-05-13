@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Repl from '$lib/Repl.svelte';
+	import '../../app.css';
+	import { effectiveTheme } from '$lib/settings/store';
 	import { files, fiddleTitle, fiddleUpdated, description } from '$lib/repl/state';
 	import { decompress, type Fiddle, defaultFiddle } from '$lib/compress-fiddle.js';
 	import { onMount } from 'svelte';
-
-	export let data;
 
 	function setFiddle() {
 		const fragmentURL: string = window.location.hash.slice(1);
@@ -32,4 +31,17 @@
 	});
 </script>
 
-	<Repl outputUrl={data.outputUrl} />
+<svelte:head>
+	<title
+		>{$fiddleTitle
+			? `${$fiddleTitle} - JavaFiddle`
+			: 'JavaFiddle - Build and share Java code snippets in your browser'}</title
+	>
+	<meta name="description" content={$description} />
+</svelte:head>
+
+<div class="contents" class:dark={$effectiveTheme === 'dark'}>
+	<div class="bg-white text-black dark:bg-stone-900 dark:text-white">
+		<slot />
+	</div>
+</div>
