@@ -4,10 +4,9 @@
 	import { relativeTime } from 'svelte-relative-time';
 	import FiddleTitle from './menu/FiddleTitle.svelte';
 	import SettingsButton from './menu/SettingsButton.svelte';
-	import { autoRun } from '$lib/settings/store';
 	import { blur } from 'svelte/transition';
 	import FavouriteButton from './menu/FavouriteButton.svelte';
-	import { files, fiddleTitle, fiddleUpdated, favouriteIndex } from './state';
+	import { files, fiddleTitle, fiddleUpdated, favouriteIndex, autoRun } from './state';
 	import { defaultFiddle } from '$lib/compress-fiddle';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores'
