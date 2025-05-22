@@ -3,54 +3,63 @@
 	import Sidebar from './repl/Sidebar.svelte';
 	import Editor from './repl/Editor.svelte';
 	import Output from './repl/Output.svelte';
-	import { files } from './repl/state';
+	import { autoRun, files, isloading, isSaved } from './repl/state';
 	import FileTabs from './repl/FileTabs.svelte';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
-	import { autoRun } from './settings/store';
-	import { onMount } from 'svelte';
-	import { tryPlausible } from './plausible';
+	import { debounceFunction, tryPlausible } from './utility'
+	import { onDestroy, onMount } from 'svelte';
 
 	export let enableSidebar: boolean = true;
 	export let enableMenu: boolean = true;
 	
-	let isSaved = true;
-	let output: Output;
+	let cheerpjEngine: Output;
 	let compileLog = '';
-
-	files.subscribe(() => {
-		isSaved = false;
-		if ($autoRun) run();
-	});
-
-	// files is set by +layout.svelte on load, but we want to keep isSaved true on load
-	// i.e. undo above subscription
-	onMount(() => {
-		isSaved = true;
-	});
-
-	async function run() {
-		// custom event tracking for analytics
-		tryPlausible('Compile');
-
-		isSaved = true;
-		await output.compileAndRun();
-	}
 
 	async function share() {
 		// custom event tracking for analytics
 		tryPlausible('Share');
 
-		isSaved = true;
 		await navigator.clipboard.writeText(window.location.toString());
 	}
+
+	async function run() {
+		// custom event tracking for analytics
+		tryPlausible('Compile');
+
+		await cheerpjEngine.compileAndRun();
+	}
+
+	const delayedRun = debounceFunction(run, 500);
+
+	// autorun mode
+	const unsubAutoRun = files.subscribe(() => {
+		if ($autoRun && !$isloading)
+			delayedRun();
+	});
+
+	// run everytime autoRun mode is set
+	const unsubSetAutoRun = autoRun.subscribe(() => {
+		if ($autoRun) cheerpjEngine?.compileAndRun();
+	});
 
 	function onBeforeUnload(evt: BeforeUnloadEvent) {
 		evt.preventDefault();
 		return (evt.returnValue = '');
 	}
+
+	onMount(async () => {
+		await cheerpjEngine.startCheerpj();
+		if(!$autoRun)
+			cheerpjEngine.compileAndRun();
+	});
+
+	onDestroy(() => {
+		unsubAutoRun();
+		unsubSetAutoRun();
+	});
 </script>
 
-<svelte:window on:beforeunload={isSaved ? undefined : onBeforeUnload} />
+<svelte:window on:beforeunload={$isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
 	{#if enableMenu}
@@ -67,12 +76,11 @@
 						<FileTabs />
 					</div>
 
-					<Editor {compileLog} />
+					<Editor {compileLog} on:run={run}/>
 				</section>
 				<section slot="b" class="border-t border-stone-200 dark:border-stone-700 overflow-hidden">
-					<Output bind:this={output}
-						on:running={(data) => {compileLog = data.detail.compileLog}} 
-						on:compile_error={(data) => {compileLog = data.detail.compileLog}}
+					<Output bind:this={cheerpjEngine}
+						on:compileLog={(data) => compileLog = data.detail.compileLog}
 					/>
 				</section>
 			</SplitPane>

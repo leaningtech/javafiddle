@@ -18,5 +18,3 @@ export const effectiveTheme = derived(theme, ($theme) => {
 	}
 	return $theme;
 });
-
-export const autoRun = persist(writable<boolean>(false), createLocalStorage(), 'autoRun');

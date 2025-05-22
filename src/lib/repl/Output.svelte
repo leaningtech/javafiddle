@@ -2,67 +2,44 @@
 	import Icon from '@iconify/svelte';
 	import { browser } from '$app/environment';
 	import CheerpJ from '$lib/CheerpJ.svelte';
-	import { files, type File } from '$lib/repl/state';
+	import { files, isloading } from '$lib/repl/state';
 	import Loading from '$lib/Loading.svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher<{
-		running: {compileLog: string}, 
-		compile_error: {compileLog: string}}
-	>();
+	const dispatch = createEventDispatcher<{compileLog: {compileLog: string}}>();
 
-	let loading = false;
 	let consoleOut: HTMLPreElement;
 	let display: HTMLElement;
 	let lwjglCanvas: HTMLCanvasElement;
+	let cheerpjEngine: CheerpJ;
 
 	$: if (lwjglCanvas) window.lwjglCanvasElement = lwjglCanvas;
 
 	export async function compileAndRun() {
-		if (!browser || loading) return;
+		if (!browser || !cheerpjEngine || $isloading) return;
 
 		console.info('compileAndRun');
 
-		loading = true;
 		consoleOut.innerHTML = '';
-
-		const classPath = '/app/tools.jar:/app/lwjgl-2.9.0.jar:/app/lwjgl_util-2.9.0.jar:/files/';
-
-		const sourceFiles = $files.map((file) => '/str/' + file.path);
-		const code = await cheerpjRunMain(
-			'com.sun.tools.javac.Main',
-			classPath,
-			...sourceFiles,
-			'-d',
-			'/files/',
-			'-Xlint'
-		);
-		const compileLog = consoleOut.innerText;
-		if (code != 0) {
-			loading = false;
-			dispatch('compile_error', { compileLog });
-			return;
-		}
-
-		consoleOut.innerHTML = '';
-		await cheerpjRunMain(deriveMainClass($files[0]), classPath);
-		loading = false;
-		dispatch('running', { compileLog });
+		const cheerpjDisplay = display.querySelector("#cheerpjDisplay");
+		// remove manually the display in case Swing has just run
+		if (cheerpjDisplay) cheerpjDisplay.innerHTML = '';
+		
+		await cheerpjEngine.runCheerpj();
+		
+		dispatch("compileLog", { compileLog: consoleOut?.innerText });
 	}
 
-	function deriveMainClass(file: File) {
-		const className = file.path.split('/').pop()!.replace('.java', '');
-		const match = file.content.match(/package\s+(.+);/);
-		if (match && match.length > 1) {
-			const packageName = match[1];
-			return `${packageName}.${className}`;
-		} else {
-			return className;
-		}
+	export async function startCheerpj() {
+		if (!cheerpjEngine) return
+		await cheerpjEngine.startCheerpj();
+		// now that cheerpj modules are imported force update
+		// of $files so that now they will be stored in the cheerpj fs
+		files.update(files => files);
 	}
 </script>
 
-<div class="w-full h-full" class:hidden={!loading}>
+<div class="w-full h-full" class:hidden={!$isloading}>
 	<Loading />
 </div>
 
@@ -106,4 +83,4 @@
 	}
 </style>
 
-<CheerpJ on:ready={compileAndRun} {display} />
+<CheerpJ bind:this={cheerpjEngine} {display}/>
