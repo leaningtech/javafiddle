@@ -7,7 +7,7 @@
 	import { indentUnit } from '@codemirror/language';
 	import { lintGutter } from '@codemirror/lint';
 	import { java } from '@codemirror/lang-java';
-	import { files, fiddleTitle, fiddleUpdated, selectedFilePath, type File } from './state';
+	import { files, fiddleTitle, fiddleUpdated, selectedFilePath, type File, compileLog } from './state';
 	import './codemirror.css';
 	import { compartment, diagnostic, parseCompileLog } from './linter';
 	import { effectiveTheme } from '$lib/settings/store';
@@ -111,15 +111,6 @@
 			editorView?.destroy();
 		};
 	});
-	/*
-	beforeNavigate(() => {
-		skipReset = true;
-	});
-	afterNavigate(() => {
-		skipReset = false;
-		editorStates.clear();
-		reset(files);
-	});*/
 
 	// Look at the selected file
 	$: {
@@ -130,9 +121,8 @@
 	}
 
 	// Linter
-	export let compileLog: string;
 	$: {
-		const diagnostics = parseCompileLog(compileLog, $files);
+		const diagnostics = parseCompileLog($compileLog, $files);
 		for (let fileIndex = 0; fileIndex < diagnostics.length; fileIndex++) {
 			const diagnosticsForFile = diagnostics[fileIndex];
 			const path = $files[fileIndex].path;
