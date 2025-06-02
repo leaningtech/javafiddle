@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
-	import { autoRun } from './store';
+	import { autoRun } from '$lib/repl/state';
 </script>
 
 <!-- triangle pointing above -->

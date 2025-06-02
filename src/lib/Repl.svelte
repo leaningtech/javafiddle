@@ -2,11 +2,11 @@
 	import Menu from './repl/Menu.svelte';
 	import Sidebar from './repl/Sidebar.svelte';
 	import Editor from './repl/Editor.svelte';
-	import { files } from './repl/state';
+	import { files, autoRun, loading } from './repl/state';
 	import FileTabs from './repl/FileTabs.svelte';
 	import Loading from './Loading.svelte';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
-	import { autoRun, theme } from './settings/store';
+	import { theme } from './settings/store';
 	import { onMount } from 'svelte';
 	import { tryPlausible } from './plausible';
 
@@ -17,7 +17,6 @@
 	let isSaved = true;
 
 	let iframe: HTMLIFrameElement;
-	let loading = false;
 	let compileLog = '';
 
 	files.subscribe(() => {
@@ -32,8 +31,8 @@
 	});
 
 	function run() {
-		if (!loading) {
-			loading = true;
+		if (!$loading) {
+			$loading = true;
 			iframe?.contentWindow?.postMessage(
 				{
 					action: 'reload'
@@ -57,7 +56,7 @@
 				},
 				window.location.origin
 			);
-			loading = false; // once files are sent, any changes to files will trigger a reload
+			$loading = false; // once files are sent, any changes to files will trigger a reload
 		} else if (action === 'running') {
 			compileLog = event.data.compileLog;
 		} else if (action === 'compile_error') {
@@ -113,14 +112,14 @@
 					<Editor {compileLog} />
 				</section>
 				<section slot="b" class="border-t border-stone-200 dark:border-stone-700 overflow-hidden">
-					<div class="w-full h-full" class:hidden={!loading}>
+					<div class="w-full h-full" class:hidden={!$loading}>
 						<Loading />
 					</div>
 					<iframe
 						bind:this={iframe}
 						src={outputUrl}
 						class="w-full h-full"
-						class:hidden={loading}
+						class:hidden={$loading}
 						title="Output"
 						allowtransparency={true}
 						frameborder={0}
