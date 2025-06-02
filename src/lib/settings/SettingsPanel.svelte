@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
-	import { autoRun } from '$lib/repl/state';
+	import { autoRun, isRunning, runCode } from '$lib/repl/state';
 </script>
 
 <!-- triangle pointing above -->
@@ -27,7 +27,10 @@
 
 	<h3 class="font-semibold">Behaviour</h3>
 	<div class="flex items-center gap-1.5">
-		<input type="checkbox" bind:checked={$autoRun} id="auto-run" />
+		<input type="checkbox" bind:checked={$autoRun} on:change={() => {
+			// if autorun is set force re-run by updating files
+			$runCode = $autoRun && !$isRunning;
+		}} id="auto-run" />
 		<label for="auto-run" class="grow">Run code automatically</label>
 	</div>
 </div>

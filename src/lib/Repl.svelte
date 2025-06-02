@@ -2,86 +2,24 @@
 	import Menu from './repl/Menu.svelte';
 	import Sidebar from './repl/Sidebar.svelte';
 	import Editor from './repl/Editor.svelte';
-	import { files, autoRun, loading } from './repl/state';
+	import { isSaved, runCode } from './repl/state';
 	import FileTabs from './repl/FileTabs.svelte';
-	import Loading from './Loading.svelte';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
-	import { theme } from './settings/store';
-	import { onMount } from 'svelte';
-	import { tryPlausible } from './plausible';
+	import { tryPlausible } from './utilities';
+	import Output from './repl/Output.svelte';
 
-	export let outputUrl: string;
 	export let enableSidebar: boolean = true;
 	export let enableMenu: boolean = true;
 
-	let isSaved = true;
-
-	let iframe: HTMLIFrameElement;
-	let compileLog = '';
-
-	files.subscribe(() => {
-		isSaved = false;
-		if ($autoRun) run();
-	});
-
-	// files is set by +layout.svelte on load, but we want to keep isSaved true on load
-	// i.e. undo above subscription
-	onMount(() => {
-		isSaved = true;
-	});
-
-	function run() {
-		if (!$loading) {
-			$loading = true;
-			iframe?.contentWindow?.postMessage(
-				{
-					action: 'reload'
-				},
-				window.location.origin
-			);
-		}
-	}
-
-	function onMessage(event: MessageEvent) {
-		if (event.origin !== window.location.origin) return;
-
-		const { action } = event.data;
-		console.log('recv from iframe', event.data);
-
-		if (action === 'ready') {
-			iframe?.contentWindow?.postMessage(
-				{
-					action: 'run',
-					files: $files
-				},
-				window.location.origin
-			);
-			$loading = false; // once files are sent, any changes to files will trigger a reload
-		} else if (action === 'running') {
-			compileLog = event.data.compileLog;
-		} else if (action === 'compile_error') {
-			compileLog = event.data.compileLog;
-		}
-	}
-
 	async function share() {
-
-		// custom event tracking for analytics
 		tryPlausible('Share');
-
-		isSaved = true;
 		await navigator.clipboard.writeText(window.location.toString());
 	}
 
-	// Notify iframe of theme changes so it can reload its theme from localStorage
-	$: {
-		$theme;
-		iframe?.contentWindow?.postMessage(
-			{
-				action: 'theme_change'
-			},
-			window.location.origin
-		);
+	// only used when the users presses the button RUN
+	async function run() {
+		tryPlausible('Compile');
+		$runCode = true;
 	}
 
 	function onBeforeUnload(evt: BeforeUnloadEvent) {
@@ -92,7 +30,7 @@
 	}
 </script>
 
-<svelte:window on:message={onMessage} on:beforeunload={isSaved ? undefined : onBeforeUnload} />
+<svelte:window on:beforeunload={$isSaved ? undefined : onBeforeUnload} />
 
 <div class="w-full h-screen font-sans flex flex-col overflow-hidden">
 	{#if enableMenu}
@@ -109,21 +47,10 @@
 						<FileTabs />
 					</div>
 
-					<Editor {compileLog} />
+					<Editor />
 				</section>
 				<section slot="b" class="border-t border-stone-200 dark:border-stone-700 overflow-hidden">
-					<div class="w-full h-full" class:hidden={!$loading}>
-						<Loading />
-					</div>
-					<iframe
-						bind:this={iframe}
-						src={outputUrl}
-						class="w-full h-full"
-						class:hidden={$loading}
-						title="Output"
-						allowtransparency={true}
-						frameborder={0}
-					/>
+					<Output />
 				</section>
 			</SplitPane>
 		</div>

@@ -1,40 +1,30 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { browser } from '$app/environment';
-	import { tryPlausible } from './plausible';
-	import { files, loading, type File } from './repl/state';
+	import { onDestroy, onMount } from 'svelte';
+	import { autoRun, compileLog, files, isRunning, isSaved, runCode, type File } from './repl/state';
+	import { debounceFunction } from './utilities';
 
-	const dispatch = createEventDispatcher<{ ready: undefined }>();
+	let cjConsole: HTMLElement;
+	let cjOutput: HTMLElement;
+	let cjOutputObserver: MutationObserver;
 
-	export let display: HTMLElement;
-	export let consoleEl: HTMLPreElement;
-
-	async function onLoad() {
-
+	async function startCheerpj() {
 		await cheerpjInit({
 			status: 'none',
 			javaProperties: ['java.library.path=/app/cheerpj-natives/natives']
 		});
+		const display = document.getElementById("output");
 		cheerpjCreateDisplay(-1, -1, display);
-		dispatch('ready');
 	}
 
-	if (browser) {	// so it doesn't run server-side
-		onLoad();
-	}
-
-	export async function compileAndRun() {
-		if (!browser) return;
+	async function runCheerpj() {
+		if ($isRunning) return;
 
 		console.info('compileAndRun');
-
-		// custom event tracking for analytics
-		tryPlausible('Compile');
-
-		consoleEl.innerHTML = '';
+		$isRunning = true;
+		cjConsole.innerHTML = '';
+		cjOutput.innerHTML = '';
 
 		const classPath = '/app/tools.jar:/app/lwjgl-2.9.0.jar:/app/lwjgl_util-2.9.0.jar:/files/';
-
 		const sourceFiles = $files.map((file) => '/str/' + file.path);
 		const code = await cheerpjRunMain(
 			'com.sun.tools.javac.Main',
@@ -44,17 +34,12 @@
 			'/files/',
 			'-Xlint'
 		);
-		const compileLog = consoleEl.innerText;
-		if (code != 0) {
-			$loading = false;
-			window.top?.postMessage({ action: 'compile_error', compileLog }, window.location.origin);
-			throw new Error('Compilation failed');
-		}
+		if (code === 0) await cheerpjRunMain(deriveMainClass($files[0]), classPath);
 
-		consoleEl.innerHTML = '';
-		cheerpjRunMain(deriveMainClass($files[0]), classPath);
-		$loading = false;
-		window.top?.postMessage({ action: 'running', compileLog }, window.location.origin);
+		// in case nothing is written on cjConsole and cjOutput
+		// manually unflag $isRunning
+		if ($isRunning) $isRunning = false;
+		$compileLog = cjConsole.innerText;
 	}
 
 	function deriveMainClass(file: File) {
@@ -68,18 +53,65 @@
 		}
 	}
 
-	// Persist files to CheerpJ filesystem
-	files.subscribe(($files) => {
-		if ('cheerpjAddStringFile' in globalThis) {
+	const debounceRunCheerpj = debounceFunction(runCheerpj, 500);
+
+	let unsubSaveFiles: () => void;
+	let unsubRunCode: () => void;
+
+	onMount(async () => {
+		await startCheerpj();
+
+		cjConsole = document.getElementById("console");
+		cjOutput = document.getElementById("cheerpjDisplay");
+		// remove useless loading screen
+		cjOutput.classList.remove("cheerpjLoading");
+
+		unsubSaveFiles = files.subscribe(() => {
+		if ($isRunning) {
+			$isSaved = false;
+		} else {
 			try {
 				const encoder = new TextEncoder();
 				for (const file of $files) {
 					cheerpjAddStringFile('/str/' + file.path, encoder.encode(file.content));
 				}
-				console.info('wrote files');
+				$isSaved = true;
+				if ($autoRun) $runCode = true;
 			} catch (error) {
 				console.error('Error writing files to CheerpJ', error);
 			}
 		}
+		});
+		unsubRunCode = runCode.subscribe(() => {
+			if ($runCode) {
+				$runCode = false;
+			($autoRun) ? debounceRunCheerpj() : runCheerpj();
+			}
+		});
+
+		// code execution (flagged by isRunning) is considered over
+		// when cjConsole or cjOutput are updated
+		cjOutputObserver = new MutationObserver(() => {
+			if ($isRunning && (cjConsole.innerHTML || cjOutput.innerHTML)) {
+				$isRunning = false;
+				if (!$isSaved) files.update((files) => files);
+			}
+		});
+		cjOutputObserver.observe((cjConsole), {
+			childList: true,
+			subtree: true,
+		});
+		cjOutputObserver.observe((cjOutput), {
+			childList: true,
+			subtree: true,
+		});
+
+		await runCheerpj();
+	});
+
+	onDestroy(() => {
+		if (unsubSaveFiles) unsubSaveFiles();
+		if (unsubRunCode) unsubRunCode();
+		if (cjOutputObserver) cjOutputObserver.disconnect();
 	});
 </script>

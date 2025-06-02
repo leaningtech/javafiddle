@@ -29,4 +29,10 @@ export const description = writable<string>('JavaFiddle is an online, browser-ba
 
 export const autoRun = persist(writable<boolean>(false), createLocalStorage(), 'autoRun');
 
-export const loading = writable<boolean>(false);
+export const isRunning = writable<boolean>(false);
+
+export const isSaved = writable<boolean>(true);
+
+export const runCode = writable<boolean>(false);
+
+export const compileLog = writable<string>('');
