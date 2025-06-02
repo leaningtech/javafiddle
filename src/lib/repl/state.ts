@@ -13,21 +13,6 @@ export type File = {
 
 export const files = writable<File[]>([]);
 
-// Persist files to CheerpJ filesystem
-files.subscribe(($files) => {
-	if ('cheerpjAddStringFile' in globalThis) {
-		try {
-			const encoder = new TextEncoder();
-			for (const file of $files) {
-				cheerpjAddStringFile('/str/' + file.path, encoder.encode(file.content));
-			}
-			console.info('wrote files');
-		} catch (error) {
-			console.error('Error writing files to CheerpJ', error);
-		}
-	}
-});
-
 export const selectedFilePath = writable<string>('Main.java');
 
 export const isSidebarOpen = persist(writable(true), createLocalStorage(), 'isSidebarOpen');
@@ -41,3 +26,7 @@ export const favourites = persist(writable<Fiddle[]>([]), createIndexedDBStorage
 export const favouriteIndex = writable<number>(-1);
 
 export const description = writable<string>('JavaFiddle is an online, browser-based Java IDE. Create and share Swing applications for free!');
+
+export const autoRun = persist(writable<boolean>(false), createLocalStorage(), 'autoRun');
+
+export const loading = writable<boolean>(false);
