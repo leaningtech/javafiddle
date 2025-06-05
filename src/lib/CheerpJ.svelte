@@ -10,7 +10,6 @@
 	async function startCheerpj() {
 		await cheerpjInit({
 			status: 'none',
-			javaProperties: ['java.library.path=/app/cheerpj-natives/natives']
 		});
 		const display = document.getElementById("output");
 		cheerpjCreateDisplay(-1, -1, display);
@@ -24,7 +23,7 @@
 		cjConsole.innerHTML = '';
 		cjOutput.innerHTML = '';
 
-		const classPath = '/app/tools.jar:/app/lwjgl-2.9.0.jar:/app/lwjgl_util-2.9.0.jar:/files/';
+		const classPath = '/app/tools.jar:/files/';
 		const sourceFiles = $files.map((file) => '/str/' + file.path);
 		const code = await cheerpjRunMain(
 			'com.sun.tools.javac.Main',

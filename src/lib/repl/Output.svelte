@@ -5,9 +5,6 @@
 	import Loading from '$lib/Loading.svelte';
 
 	let cjConsole: HTMLPreElement;
-	let lwjglCanvas: HTMLCanvasElement;
-
-	$: if (lwjglCanvas) window.lwjglCanvasElement = lwjglCanvas;
 </script>
 
 <div class="w-full h-full" class:hidden={!$isRunning}>
@@ -35,7 +32,6 @@
 	<section class="flex flex-col">
 		<div class="p-3 text-stone-500 text-sm select-none">Result</div>
 		<div class="grow relative" id="output">
-			<canvas bind:this={lwjglCanvas} class="absolute inset-0 w-full h-full" />
 			<!-- #cheerpjDisplay will be inserted here -->
 		</div>
 	</section>
