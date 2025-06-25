@@ -3,8 +3,17 @@
 	import Icon from '@iconify/svelte';
 	import { isRunning } from './state';
 	import Loading from '$lib/Loading.svelte';
+	import { browser } from '$app/environment';
 
 	let cjConsole: HTMLPreElement;
+	export let isOutputMode = true;
+
+	function viewInOutputMode() {
+		if (browser) {
+			const url = `/output/${window.location.hash}`;
+			window.open(url, "_blank", "noreferrer");
+		}
+	}
 </script>
 
 <div class="w-full h-full" class:hidden={!$isRunning}>
@@ -37,12 +46,14 @@
 	</section>
 </div>
 
-<div class="absolute top-0 right-0 text-stone-500 text-sm flex items-center select-none">
-	<!-- svelte-ignore a11y-invalid-attribute -->
-	<a href="" target="_blank" rel="noreferrer" class="px-2 py-2" title="Open in new tab">
-		<Icon icon="mi:external-link" class="w-5 h-5" />
-	</a>
-</div>
+{#if isOutputMode}
+	<div class="absolute top-1/2 right-0 text-stone-500 text-sm flex items-center select-none">
+		<!-- svelte-ignore a11y-invalid-attribute -->
+		<button class="px-2 py-2" title="Open in new tab" on:click={viewInOutputMode}>
+			<Icon icon="mi:external-link" class="w-5 h-5" />
+		</button>
+	</div>
+{/if}
 
 <style>
 	:global(#cheerpjDisplay) {
