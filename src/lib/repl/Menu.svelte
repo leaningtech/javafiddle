@@ -7,9 +7,8 @@
 	import { blur } from 'svelte/transition';
 	import FavouriteButton from './menu/FavouriteButton.svelte';
 	import { files, fiddleTitle, fiddleUpdated, favouriteIndex, autoRun } from './state';
-	import { defaultFiddle } from '$lib/compress-fiddle';
+	import { defaultFiddle, defaultFiddleComp } from '$lib/compress-fiddle';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores'
 
 	const dispatch = createEventDispatcher<{ share: undefined; run: undefined }>();
 
@@ -36,8 +35,7 @@
 		if ($favouriteIndex !== -1) {
 			$favouriteIndex = -1;
 		}
-		// clear URL
-		goto($page.url.pathname);
+		goto(`/#${defaultFiddleComp}`);
 	}
 </script>
 
