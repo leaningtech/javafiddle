@@ -38,3 +38,5 @@ class Main {
 		}
 	]
 };
+
+export const defaultFiddleComp = compress(defaultFiddle);
