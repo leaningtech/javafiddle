@@ -7,13 +7,15 @@
 
 	import cheerpjDark from '$lib/assets/cheerpj/logotype-white.svg';
 	import cheerpjLight from '$lib/assets/cheerpj/logotype-grey.svg';
+	import HackathonInfo from './HackathonInfo.svelte';
 	$: cheerpjLogotypeUrl = $effectiveTheme === 'dark' ? cheerpjDark : cheerpjLight;
 </script>
 
 <aside
 	class="w-10 bg-stone-100 dark:bg-stone-800 flex-shrink-0 transition-[width] flex flex-col overflow-hidden"
-	class:!w-80={$isSidebarOpen}
+	class:!w-80={$isSidebarOpen}	
 >
+	<HackathonInfo /> 
 	<div class="text-right shadow-none animate-shadow" class:!shadow={$isSidebarOpen}>
 		<button
 			class="w-10 h-10 text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 inline-flex items-center justify-center"
@@ -51,6 +53,8 @@
 						</li>
 						<li>Supports all of Java SE 8, including Swing.</li>
 					</ul>
+					
+
 
 					<div class="my-6 flex items-center justify-center gap-2">
 						<a
