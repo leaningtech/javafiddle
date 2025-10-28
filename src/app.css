@@ -5,35 +5,3 @@
 .dark {
 	color-scheme: dark;
 }
-
-.hack-info {
-	border: 5px groove #fe900d;
-	margin: 0;
-	padding: 0;
-}
-
-.hack-info h2 {
-	text-align: center;
-	padding: 10px;
-	margin: 2px;
-	color: white;
-	box-sizing: border-box;
-
-}
-
-.hack-info p {
-	text-align: center;
-	padding: 10px;
-	margin: 2px;
-	color: white;
-	box-sizing: border-box;
-	/* font-weight: bold; */
-	/* font-size: large; */
-	font-family: Minecrafter;
-
-}
-
-.hack-info a {
-	color: #ffdd57;
-	text-decoration: underline;
-}
