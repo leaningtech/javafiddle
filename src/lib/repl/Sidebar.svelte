@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
+	import { fade } from 'svelte/transition';
 	import { isSidebarOpen } from './state';
 	import { blur } from 'svelte/transition';
 	import { effectiveTheme } from '$lib/settings/store';
@@ -15,7 +16,6 @@
 	class="w-10 bg-stone-100 dark:bg-stone-800 flex-shrink-0 transition-[width] flex flex-col overflow-hidden"
 	class:!w-80={$isSidebarOpen}	
 >
-	<HackathonInfo /> 
 	<div class="text-right shadow-none animate-shadow" class:!shadow={$isSidebarOpen}>
 		<button
 			class="w-10 h-10 text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 inline-flex items-center justify-center"
@@ -28,9 +28,12 @@
 			{/if}
 		</button>
 	</div>
-
 	<div class="w-80 grow overflow-hidden">
 		<div class="h-1/2 overflow-y-auto flex flex-col">
+			{#if $isSidebarOpen}
+			<div transition:blur={{ duration: 50 }}></div>
+				<HackathonInfo/>
+			{/if}
 			<SidebarOptions
 				forceClose={!$isSidebarOpen}
 				on:selectOption={() => ($isSidebarOpen = true)}

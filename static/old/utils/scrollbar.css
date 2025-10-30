@@ -1,19 +1,19 @@
 .console {
-  scrollbar-color: #777 #000;
+	scrollbar-color: #777 #000;
 }
 
 .console *::-webkit-scrollbar {
-  width: 6px;
-  height: 8px;
-  background-color: #272a30;
+	width: 6px;
+	height: 8px;
+	background-color: #272a30;
 }
 
 /* Add a thumb */
 .console *::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-    background: #777;
+	border-radius: 3px;
+	background: #777;
 }
 
 .console *::-webkit-scrollbar-thumb:hover {
-    background: #555;
+	background: #555;
 }
