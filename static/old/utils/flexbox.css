@@ -1,86 +1,62 @@
-.layout
-{
-  display: flex;
-
+.layout {
+	display: flex;
 }
 
-.vertical
-{
-  flex-direction: column;
-
+.vertical {
+	flex-direction: column;
 }
 
-.flex
-{
-  flex-grow: 1;
-
+.flex {
+	flex-grow: 1;
 }
 
-.horizontal
-{
-  flex-direction: row;
-
+.horizontal {
+	flex-direction: row;
 }
 
-.covering
-{
-  width: 100%; height: 100%; margin: 0em;
-              left: 0em; top: 0em;
-              position: fixed;
-
+.covering {
+	width: 100%;
+	height: 100%;
+	margin: 0em;
+	left: 0em;
+	top: 0em;
+	position: fixed;
 }
 
-.red
-{
-  background-color: red;
+.red {
+	background-color: red;
 }
 
-.yellow
-{
-  background-color: yellow;
+.yellow {
+	background-color: yellow;
 }
 
-.blue
-{
-  background-color: blue;
-
+.blue {
+	background-color: blue;
 }
 
-.green
-{
-  background-color: green;
-
+.green {
+	background-color: green;
 }
 
-.black
-{
-  background-color: black;
-
+.black {
+	background-color: black;
 }
 
-.fill-w
-{
-  width: 100%;
+.fill-w {
+	width: 100%;
 }
 
-.fill-h
-{
-  height: 100%;
-
+.fill-h {
+	height: 100%;
 }
 
-.center-x
-{
-  margin-left: auto;
-  margin-right: auto;
+.center-x {
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.center-y
-{
-
-  margin-top: auto;
-  margin-bottom: auto;
-
-
+.center-y {
+	margin-top: auto;
+	margin-bottom: auto;
 }
-
