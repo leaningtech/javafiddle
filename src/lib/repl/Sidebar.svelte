@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { fade } from 'svelte/transition';
 	import { isSidebarOpen } from './state';
 	import { blur } from 'svelte/transition';
 	import { effectiveTheme } from '$lib/settings/store';
@@ -8,7 +7,6 @@
 
 	import cheerpjDark from '$lib/assets/cheerpj/logotype-white.svg';
 	import cheerpjLight from '$lib/assets/cheerpj/logotype-grey.svg';
-	import HackathonInfo from './HackathonInfo.svelte';
 	$: cheerpjLogotypeUrl = $effectiveTheme === 'dark' ? cheerpjDark : cheerpjLight;
 </script>
 
@@ -30,10 +28,6 @@
 	</div>
 	<div class="w-80 grow overflow-hidden">
 		<div class="h-1/2 overflow-y-auto flex flex-col">
-			{#if $isSidebarOpen}
-			<div transition:blur={{ duration: 50 }}></div>
-				<HackathonInfo/>
-			{/if}
 			<SidebarOptions
 				forceClose={!$isSidebarOpen}
 				on:selectOption={() => ($isSidebarOpen = true)}
