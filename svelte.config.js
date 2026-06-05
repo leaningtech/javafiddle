@@ -7,7 +7,9 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			fallback: 'index.html'
+			fallback: 'index.html',
+			pages: 'dist',
+			assets: 'dist'
 		})
 	}
 };
